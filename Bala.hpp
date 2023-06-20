@@ -6,7 +6,7 @@ public:
     int coli = 0;
     int vida = 0;
 
-    int movimentos(Player jogador, Mapa mapa) {
+    int movimentos(Player jogador, sf::RectangleShape) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
             while (coli == 0) {
                 movimento(pos);
