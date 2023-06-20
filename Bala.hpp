@@ -12,10 +12,21 @@ public:
                 movimento(pos);
                 corpo.setPosition(pos[0], pos[1]);  // Definir a posição corretamente
 
-                if (corpo.getGlobalBounds().intersects(jogador.getCorpo())) {
-                    vida = 1;
-                    break;
-                }
+                // if (corpo.getGlobalBounds().intersects(jogador.getCorpo())) {
+                //     vida = 1;
+                //     break;
+                // }
+
+            for (int i = 0; i < alt; i++) {
+			     for (int j = 0; j < larg; j++) {
+				     if(mapa[i][j].getFillColor() == sf::Color::Blue){
+					     if(jogador.getCorpo().getGlobalBounds().intersects(mapa[i][j].getGlobalBounds())){
+						     colidiu = true;
+					     }
+				     }
+			     }
+		     }
+
 
                 if (corpo.getGlobalBounds().intersects(mapa.getCasa)) {
                     coli = 1;
