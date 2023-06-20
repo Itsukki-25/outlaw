@@ -1,4 +1,4 @@
-
+#include "player.hpp"
 //Nos teste de colisão eu não consegui entender os codigos de player e do mapa, mas é só trocar as palavras 'Player' e 'mapa' pelas respectivas coisas lá
 class bala : protected movel {
 public:
@@ -6,13 +6,13 @@ public:
     int coli = 0;
     int vida = 0;
 
-    int movimentos() {
+    int movimentos(player jogador) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
             while (coli == 0) {
                 movimento(pos);
                 corpo.setPosition(pos[0], pos[1]);  // Definir a posição corretamente
 
-                if (corpo.getGlobalBounds().intersects(Player)) {
+                if (corpo.getGlobalBounds().intersects(player)) {
                     vida = 1;
                     break;
                 }
