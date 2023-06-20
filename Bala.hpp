@@ -6,7 +6,7 @@ public:
     int coli = 0;
     int vida = 0;
 
-    int movimentos(player jogador, ) {
+    int movimentos(Player jogador, Mapa mapa) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
             while (coli == 0) {
                 movimento(pos);
@@ -17,7 +17,7 @@ public:
                     break;
                 }
 
-                if (corpo.getGlobalBounds().intersects(mapa)) {
+                if (corpo.getGlobalBounds().intersects(mapa.getCasa)) {
                     coli = 1;
 
                     while (coli == 1) {
