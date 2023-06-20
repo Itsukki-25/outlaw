@@ -74,7 +74,7 @@ public:
 		 }
 
 		 if(colidiu == true){
-			 std::cout << "Colisão detectada com um obstáculo!" << std::endl;
+			 std::cout << "ColisÃ£o detectada com um obstÃ¡culo!" << std::endl;
 			 colidiu = false;
 
 			 corpo.move(0,-velX);
@@ -95,7 +95,7 @@ public:
 		 }
 
 		 if(colidiu == true){
-			 std::cout << "Colisão detectada com um obstáculo!" << std::endl;
+			 std::cout << "ColisÃ£o detectada com um obstÃ¡culo!" << std::endl;
 			 colidiu = false;
 
 			 corpo.move(-velY,0);
@@ -141,7 +141,7 @@ public:
 		 }
 
 		 if(colidiu == true){
-			 std::cout << "Colisão detectada com um obstáculo!" << std::endl;
+			 std::cout << "ColisÃ£o detectada com um obstÃ¡culo!" << std::endl;
 			 colidiu = false;
 
 			 corpo.setSize(sf::Vector2f(largura, altura));
@@ -150,6 +150,10 @@ public:
 			 this->altura = alt;
 		 }
 
+	}
+
+	sf::RectangleShape getCorpo(){
+		return corpo;
 	}
 
 	void desenharPlayer(sf::RenderWindow& window){
