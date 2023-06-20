@@ -6,13 +6,13 @@ public:
     int coli = 0;
     int vida = 0;
 
-    int movimentos(player jogador) {
+    int movimentos(player jogador, ) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
             while (coli == 0) {
                 movimento(pos);
                 corpo.setPosition(pos[0], pos[1]);  // Definir a posição corretamente
 
-                if (corpo.getGlobalBounds().intersects(player)) {
+                if (corpo.getGlobalBounds().intersects(jogador.getCorpo())) {
                     vida = 1;
                     break;
                 }
@@ -21,7 +21,7 @@ public:
                     coli = 1;
 
                     while (coli == 1) {
-                        if (corpo.getGlobalBounds().intersects(Player)) {
+                        if (corpo.getGlobalBounds().intersects(jogador.getCorpo())) {
                             vida = 1;
                             break;
                         }
