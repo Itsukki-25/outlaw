@@ -13,7 +13,7 @@ private:
 			this->corpo=corpo;
 			return coli;
 		}
-		float Direção(float dir[1]){
+		virtual float Direção(float dir[1]){
 			this-> dir[1]=dir[1];
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
@@ -28,7 +28,7 @@ private:
 			return dir[1];
 		}
 
-		float movimento(float pos[0]){
+		virtual float movimento(float pos[0]){
 				this-> pos[0]=pos[0];
 
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
