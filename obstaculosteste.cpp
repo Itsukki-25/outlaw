@@ -60,7 +60,7 @@ int main() {
 
 		window.clear();
 	//	window.draw( );
-		window.draw(shape);
+		window.draw(bolinha.shape);
 		window.display();
 		//sf::sleep(sf::seconds(0.02));
 	}
