@@ -14,7 +14,7 @@
  */
 //#include <SFML/Graphics.hpp>
 //#include <iostream>
-#include"classe.hpp"
+#include"obstaculos.hpp"
 int main() {
 	sf::RenderWindow window(sf::VideoMode(700, 540), "Bolinha ");
 	//int tempo = 1;
