@@ -1,52 +1,57 @@
 #include "player.hpp"
-//Nos teste de colisão eu não consegui entender os codigos de player e do mapa, mas é só trocar as palavras 'Player' e 'mapa' pelas respectivas coisas lá
-class bala : protected movel {
+#include "Movel.hpp"
+#include <SFML/Graphics.hpp>
+
+class bala: protected movel {
+
 public:
-    sf::RectangleShape corpo;
-    int coli = 0;
-    int vida = 0;
+	sf::RectangleShape corpo;
+	int coli = 0;
+	int vida = 0;
 
-    int movimentos(Player jogador, sf::RectangleShape (*mapa)[40]) {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-            while (coli == 0) {
-                movimento(pos);
-                corpo.setPosition(pos[0], pos[1]);  // Definir a posição corretamente
 
-                // if (corpo.getGlobalBounds().intersects(jogador.getCorpo())) {
-                //     vida = 1;
-                //     break;
-                // }
+	int movimentos(Player jogador, sf::RectangleShape (*mapa)[40], int alt, int larg) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+			while (coli == 0) {
+				movimento();
+				corpo.setPosition(pos[0], pos[1]); // Definir a posiÃ§Ã£o corretamente
 
-            for (int i = 0; i < alt; i++) {
-			     for (int j = 0; j < larg; j++) {
-				     if(mapa[i][j].getFillColor() == sf::Color::Blue){
-					     if(corpo.getGlobalBounds().intersects(mapa[i][j].getGlobalBounds())){
-						     vida = 1;
-						     break;
-					     }
+				// if (corpo.getGlobalBounds().intersects(jogador.getCorpo())) {
+				//     vida = 1;#include <SFML/Graphics.hpp>
+				//     break;
+				// }
 
-						if (corpo.getGlobalBounds().intersects(mapa.getCasa)) {
-                    					coli = 1;
+				for (int i = 0; i < alt; i++) {
+					for (int j = 0; j < larg; j++) {
+						if (mapa[i][j].getFillColor() == sf::Color::Blue) {
+							if (corpo.getGlobalBounds().intersects(
+									mapa[i][j].getGlobalBounds())) {
+								vida = 1;
+								break;
+							}
 
-                    				while (coli == 1) {
-                        				if (corpo.getGlobalBounds().intersects(jogador.getCorpo())) {
-                            					vida = 1;
-                            					break;
-                        				}
+							if (corpo.getGlobalBounds().intersects(mapa[i][j].getGlobalBounds())){
+								coli = 1;
 
-                        				corpo.setPosition(pos[0], pos[1] * -1);
+								while (coli == 1) {
+									if (corpo.getGlobalBounds().intersects(jogador.getCorpo().getGlobalBounds())) {
+										vida = 1;
+										break;
+									}
 
-                        				if (coli == 2) {
-                            					coli = 3;
-                        				}
-                    				}
-                			}
-				     }
-			     }
-		     }
-            }
-        }
+									corpo.setPosition(pos[0], pos[1] * -1);
 
-        return vida;
-    }
+									if (coli == 2) {
+										coli = 3;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return vida;
+	}
 };
