@@ -1,3 +1,5 @@
+#ifndef PLAYER_HPP
+#define PLAYER_HPP
 /*
  * player.hpp
  *
@@ -161,3 +163,4 @@ public:
 		std::cout << "Player desenhado!" << std::endl;
 	}
 };
+#endif // PLAYER_HPP
