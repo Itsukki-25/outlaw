@@ -18,12 +18,13 @@
 //		int velx, vely;
 //};
 class Objeto_Movel {
+public:
+	sf::CircleShape shape;
 private:
 	int tempo = 1;
 	int windowx = 700 ;
 	int windowy = 540 ;
 	int tamanho = 10;
-	sf::CircleShape shape;
 	int posx;
 	int posy;
 	int velx, vely;
