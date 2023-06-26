@@ -1,18 +1,25 @@
-// Description : Hello World in C++, Ansi-style
-//============================================================================
 
-
-#include <iostream>
-#include <vector>
-#include <string>
 #include <SFML/Graphics.hpp>
+#include <iostream>
+#include <string>
+#include <vector>
+
 #include "map.hpp"
 #include "player.hpp"
+#include "Bala.hpp"
 
 using namespace std;
 
+vector<bala> balas;
+
+void desenharBala(sf::RenderWindow& window, Mapa mapa, Player jogador){
+	for(int i = 0; i <= balas.size(); i++){
+		balas[i].movimentos(jogador, mapa.getCasa(), 20, 40);
+		window.draw(balas[i].corpo);
+	}
+};
+
 int main() {
-	//cout << "Olá Mundo!" << endl;
 
 	vector<string> mapa1{"########################################",
 			 	 	 	 "#      #                               #",
