@@ -3,7 +3,7 @@
 /*
  * funções contrutoras inicializam valores em uma classe <- descobri agr, 28/06, 17:34
  */
-class Movel {
+class Obstaculo {
 protected:
 	float tamanho = 10;
 	int posx;
@@ -35,18 +35,28 @@ public:
 		shape.setPosition(posx, posy);
 		sf::sleep(sf::seconds(0.05));
 	}
-	void Desenha(sf::RenderWindow& window){
+	void Desenha(sf::RenderWindow& window) {
 		window.clear();
 		window.draw(shape);
 		window.display();
 	}
 
 };
+class BolaFeno:Obstaculo{
+	void Movimenta() {
+		//	posx = posx + velx * 1;
+			posy = posy + vely * 1;
+			shape.setPosition(posx, posy);
+			sf::sleep(sf::seconds(0.05));
+		}
+};
 
 int main() {
 	sf::RenderWindow window(sf::VideoMode(640, 480), "SFML POOL!");
-	Movel bolinha;
+	BolaFeno bolinha;
 	bolinha.InicializaValores(window);
+
+
 	while (window.isOpen()) {
 		sf::Event event;
 		while (window.pollEvent(event)) {
@@ -54,10 +64,9 @@ int main() {
 				window.close();
 		}
 
-//		bolinha.Desenha();
-		bolinha.TestaLimite( window);
+		bolinha.TestaLimite(window);
 		bolinha.Movimenta();
-		bolinha.Desenha( window);
+		bolinha.Desenha(window);
 
 	}
 
