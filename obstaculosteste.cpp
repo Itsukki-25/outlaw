@@ -45,27 +45,16 @@ public:
 
 int main() {
 	sf::RenderWindow window(sf::VideoMode(640, 480), "SFML POOL!");
-//	int tempo = 1;
-
-//	float tamanho = 10;
-//	int posx = window.getSize().x / 2;
-//	int posy = window.getSize().y / 2;
-//	int velx = -5, vely = 5;
-//	sf::Color cor = sf::Color::Green;
-//	sf::CircleShape shape(tamanho);
-//	shape.setFillColor(cor);
-//	shape.setOrigin(tamanho / 2, tamanho / 2);
-//	shape.setPosition(posx, posy);
-
+	Movel bolinha;
+	bolinha.InicializaValores(window);
 	while (window.isOpen()) {
 		sf::Event event;
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
-		Movel bolinha;
+
 //		bolinha.Desenha();
-		bolinha.InicializaValores(window);
 		bolinha.TestaLimite( window);
 		bolinha.Movimenta();
 		bolinha.Desenha( window);
