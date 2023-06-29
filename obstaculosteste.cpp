@@ -59,25 +59,6 @@ int main() {
 		bolinha.Movimenta();
 		bolinha.Desenha( window);
 
-//		{ //Teste Limites e inverte a velocidade se preciso
-//			vely = posy < window.getSize().y ? vely : -vely;
-//			velx = posx < window.getSize().x ? velx : -velx;
-
-//			vely = posy > 0 ? vely : -vely;
-//			velx = posx > 0 ? velx : -velx;
-//		}
-
-		//std::cout <<"px="<< posx <<";vx="<<velx;
-		//std::cout <<";py="<< posy <<";vy="<<vely<< std::endl;
-
-//		posx = posx + velx * tempo;
-//		posy = posy + vely * tempo;
-//		shape.setPosition(posx, posy);
-//		sf::sleep(sf::seconds(0.05));
-
-//		window.clear();
-//		window.draw(shape);
-//		window.display();
 	}
 
 	return 0;
