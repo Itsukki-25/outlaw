@@ -3,44 +3,44 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "player.hpp"
+#include "Player.hpp"
 #include "Movel.hpp"
 
-class Bala : protected movel {
+class Bala : public Player {
 public:
-    sf::RectangleShape corpo;
+    sf::RectangleShape corpos;
     int coli = 0;
     int vida = 0;
+    Movel mov;
 
     void Movimento(int direcaoY, int direcaoX) {
         switch (direcaoY) {
             case -1:
                 switch (direcaoX) {
                     case 0:
-                        dir[1] = -1;
+                        mov.dir[1] = -1;
                         break;
                     case -1:
-                        dir[0] = -1;
-                        dir[1] = -1;
+                        mov.dir[0] = -1;
+                        mov.dir[1] = -1;
                         break;
                     case 1:
-                        dir[0] = 1;
-                        dir[1] = -1;
+                        mov.dir[0] = 1;
+                        mov.dir[1] = -1;
                         break;
                 }
                 break;
             case 0:
                 switch (direcaoX) {
                     case -1:
-                        dir[0] = -1;
+                        mov.dir[0] = -1;
                         break;
                     case 1:
-                        dir[0] = 1;
+                        mov.dir[0] = 1;
                         break;
                 }
                 break;
             case 1:
-
                 break;
         }
     }
@@ -49,18 +49,18 @@ public:
         if (jogador == 1) {
             Movimento(direcaoY, direcaoX);
         } else if (jogador == 2) {
-
+            // Lógica para jogador 2
         }
 
-        corpo.setPosition(posiX, posY);
+        corpos.setPosition(posiX, posY);
     }
 
     int Movimentos(Player jogador, sf::RectangleShape (*mapa)[40]) {
         while (coli == 0) {
-            movimento(pos);
-            corpo.setPosition(pos[0], pos[1]);
+            mov.movimento();
+            corpos.setPosition(mov.pos[0], mov.pos[1]);
 
-            if (corpo.getGlobalBounds().intersects(jogador.getCorpo())) {
+            if (corpos.getGlobalBounds().intersects(jogador.getCorpo().getGlobalBounds())) {
                 vida = 1;
                 break;
             }
@@ -68,7 +68,7 @@ public:
             for (int i = 0; i < alt; i++) {
                 for (int j = 0; j < larg; j++) {
                     if (mapa[i][j].getFillColor() == sf::Color::Blue) {
-                        if (corpo.getGlobalBounds().intersects(mapa[i][j].getGlobalBounds())) {
+                        if (corpos.getGlobalBounds().intersects(mapa[i][j].getGlobalBounds())) {
                             vida = 1;
                             break;
                         }
@@ -76,7 +76,7 @@ public:
                 }
             }
 
-            if (corpo.getPosition().x < 0 || corpo.getPosition().x > largura_do_mapa) {
+            if (corpos.getPosition().x < 0 || corpos.getPosition().x > larg) {
                 vida = 1;
                 break;
             }
