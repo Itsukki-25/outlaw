@@ -4,41 +4,51 @@
  *  Created on: 8 de jun. de 2023
  *      Author: guima
  */
-
-
-
-
-
-
-
-
 #include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
+#include <SFML/audio.hpp>
 #include <stdlib.h>
-Expand All
-	@@ -6,38 +20,46 @@
+#include <stdio.h>
+#include <time.h>
 #include <iostream>
 
 using namespace sf;
 #ifndef DECLARACOES_HPP_
 #define DECLARACOES_HPP_
 
-sf::Font fonte;
+class efeitos {
+public:
+    sf::Font fonte;
+    sf::SoundBuffer tiro;
+    sf::Sound tiros;
+    sf::Music musica;
+    sf::SoundBuffer clik;
+    sf::Sound clique;
+
+    efeitos()
+    {
+        fonte.loadFromFile("assets/fonte.ttf");
+        tiro.loadFromFile("assets/tiro.ogg");
+        tiros.setBuffer(tiro);
+        clik.loadFromFile("assets/clique.ogg");
+        clique.setBuffer(clik);
+
+    }
+};
 
 
 class Janela {
-
-
 public:
     sf::VideoMode desktopMode;
     sf::RenderWindow window;
 
     Janela()
+
         : desktopMode(sf::VideoMode::getDesktopMode()),
           window(desktopMode, "Jogo", sf::Style::Fullscreen)
+
     {
     }
-
+    sf::Vector2u screenSize = window.getSize();
     virtual void executar()
     {
 
@@ -63,12 +73,14 @@ public:
 };
 
 
-Expand All
-	@@ -47,33 +69,37 @@ class Botao : public Drawable {
+class Botao : public Drawable {
+public:
+	efeitos fonte;
+    RectangleShape estrutura;
     Text texto;
     float posX,posY;
 
-    Botao(float largura = 50, float comprimento = 50, Color cor = Color::White,float posx=0,float posY=0,bool clique=false)
+    Botao(float largura = 50, float comprimento = 40, Color cor = Color::White,float posx=0,float posY=0,bool clique=false)
 
         : estrutura(Vector2f(largura, comprimento)), texto()
     {
@@ -93,12 +105,4 @@ Expand All
     }
 
 };
-
-
-
-
-
-
-
-
 #endif /* DECLARACOES_HPP_ */
