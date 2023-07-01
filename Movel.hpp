@@ -10,6 +10,14 @@ public:
     float pos[2], dir[2], vel;
     bool colisao;
     sf::RectangleShape corpos;
+	int velX;
+	int velY;
+	int posiX;
+	int posiY;
+	sf::Vector2f posicao;
+    int altura = 5;
+    int largura = 5;
+	sf::Vector2f tamanho;
 
 protected:
     bool tcolisao(bool coli, sf::RectangleShape corpo) {
