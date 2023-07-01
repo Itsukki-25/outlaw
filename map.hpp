@@ -9,6 +9,8 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 
+#include "player.hpp"
+
 class Mapa{
 private:
 
@@ -37,7 +39,7 @@ public:
 		std::cout << "Objeto 'Mapa' criado!" << std::endl;
 	}
 
-	void definirValorCasas(std::vector<std::string>& mapa) {
+	void definirValorCasas(std::vector<std::string>& mapa, Player& jogador1, Player& jogador2 ) {
 
 	        for (int i = 0; i < altura; i++) {
 	            for (int j = 0; j < largura; j++) {
@@ -49,6 +51,12 @@ public:
 		                casas[i][j].setOutlineColor(sf::Color::Black);
 	                }else if(mapa[i][j] == '*'){
 	                    casas[i][j].setFillColor(sf::Color::Green);
+	                }else if(mapa[i][j] == '1'){
+	                    jogador1.setPosi(j * tamanhoCasa, i * tamanhoCasa);
+	                    casas[i][j].setFillColor(sf::Color::Black);
+	                }else if(mapa[i][j] == '2'){
+	                    jogador2.setPosi(j * tamanhoCasa, i * tamanhoCasa);
+	                    casas[i][j].setFillColor(sf::Color::Black);
 	                }else{
 	                    casas[i][j].setFillColor(sf::Color::Black);
 	                }
