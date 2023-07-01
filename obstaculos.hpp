@@ -60,6 +60,8 @@ public:
 
 		// Definir a textura para o sprite da bola de feno
 		spriteBolaDeFeno.setTexture(texturaBolaDeFeno);
+		spriteBolaDeFeno.setTextureRect(sf::IntRect (0, 0, 32, 32));
+		spriteBolaDeFeno.setScale(sf::Vector2f (2.0f, 2.0f));
 	}
 
 	void Movimenta() {
