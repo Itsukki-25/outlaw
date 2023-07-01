@@ -19,6 +19,10 @@ public:
     int largura = 5;
 	sf::Vector2f tamanho;
 
+	RectangleShape getCorpo(){
+		return corpo;
+	}
+
 protected:
     bool tcolisao(bool coli, sf::RectangleShape corpo) {
         this->colisao = coli;
