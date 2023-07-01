@@ -1,3 +1,9 @@
+/*
+ * Menu.cpp
+ *
+ *  Created on: 8 de jun. de 2023
+ *      Author: guima
+ */
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
@@ -7,53 +13,53 @@
 #include <iostream>
 #include "Bot.hpp"
 #include "ModoDeJogo.hpp"
-int menu(){
+#include "janela.hpp"
+#include "efeitos.hpp"
+#include "Textos.hpp"
+#include "config.hpp"
+
+class menu {
+public:
 	Botao start;
 	Botao Sair;
-	Janela janela;
+	Janela *janela;
 	efeitos efeito;
+	int *controlPanel;
+	Textos titulo;
+	void Coisa() {
 
 
-
-	start.setTexto(Text("Começar", efeito.fonte, 24), efeito.fonte);
-	start.estrutura.setPosition(40, 50);
-
-	Sair.setTexto(Text("Sair", efeito.fonte, 24), efeito.fonte);
-	Sair.estrutura.setPosition(start.posX, start.posY - 10);
-
-	janela.executar();
-	{
-		while (janela.window.isOpen()) {
-			sf::Event event;
-			while (janela.window.pollEvent(event)) {
-
-				if (event.type == sf::Event::MouseButtonPressed)
-				{
-					if (event.mouseButton.button == sf::Mouse::Left)
-					{
-						sf::Vector2f mousePos(event.mouseButton.x, event.mouseButton.y);
-						if (start.contemPonto(mousePos))
-						{
-							janela.window.clear();
-							modo();
+		titulo.adicionarTexto("Outlaw", 150, 330, 100);
 
 
-						}
-						if (Sair.contemPonto(mousePos))
-						{
+		start.setTexture(efeito.Tbotao);
+		start.setTexto(Text("Play", efeito.fonte, 60), efeito.fonte,200,480);
+		start.estrutura.setPosition(150, 490);
 
-							janela.window.close();
-						}
-					}
-				}
+		Sair.setTexture(efeito.Tbotao);
+		Sair.setTexto(Text("Sair", efeito.fonte, 60), efeito.fonte,100,590);
+		Sair.estrutura.setPosition(50, 600);
+
+
+		sf::Vector2i mousePos = sf::Mouse::getPosition(janela->window);
+
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			if (start.contemPonto(mousePos)) {
+				std::cout << "Clicou no start\n";
+				*controlPanel = 1;
+			}
+			if (Sair.contemPonto(mousePos)) {
+				std::cout << "Clicou no sair\n";
+				janela ->window.close();
 			}
 		}
+
+		janela->window.draw(efeito.fundoImage);
+
+		titulo.desenharTextos(janela->window);
+		janela->window.draw(start);
+		janela->window.draw(Sair);
+			// Desenha backgroud
 	}
-	janela.window.clear();
-	janela.window.draw(start);
-	janela.window.draw(Sair);
-	janela.window.display();
 
-	return  0;
-}
-
+};
