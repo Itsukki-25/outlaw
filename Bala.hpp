@@ -3,84 +3,74 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "Player.hpp"
+#include "player.hpp"
 #include "Movel.hpp"
 
-class Bala : public Player {
+class Bala : public movel {
+
+private:
+
+    bool coli = false;
+    bool vida = true;
+    int direcaoY = 0;
+    int direcaoX = 0;
+    sf::Vector2f posicao;
+    int codigoJogador = 0;
+    //sf::Vector2u ;
+
+
 public:
-    sf::RectangleShape corpos;
-    int coli = 0;
-    int vida = 0;
-    Movel mov;
 
-    void Movimento(int direcaoY, int direcaoX) {
-        switch (direcaoY) {
-            case -1:
-                switch (direcaoX) {
-                    case 0:
-                        mov.dir[1] = -1;
-                        break;
-                    case -1:
-                        mov.dir[0] = -1;
-                        mov.dir[1] = -1;
-                        break;
-                    case 1:
-                        mov.dir[0] = 1;
-                        mov.dir[1] = -1;
-                        break;
-                }
-                break;
-            case 0:
-                switch (direcaoX) {
-                    case -1:
-                        mov.dir[0] = -1;
-                        break;
-                    case 1:
-                        mov.dir[0] = 1;
-                        break;
-                }
-                break;
-            case 1:
-                break;
-        }
+    Bala( int VelX, int VelY, Player jogador ){
+
+    	this->codigoJogador = jogador.getCodigo();
+		this->posiX = jogador.getPosicaoV2f().x;
+		this->posiY = jogador.getPosicaoV2f().y;
+		this->velX = VelX;
+		this->velY = VelY;
+		this->corpo.setPosition(jogador.getPosicaoV2f());
+		this->corpo.setFillColor(sf::Color::Yellow);
+		corpo.setSize(sf::Vector2f(largura, altura));
     }
 
-    void Atirar(int direcaoY, int direcaoX, int jogador, int posiX, int posY) {
-        if (jogador == 1) {
-            Movimento(direcaoY, direcaoX);
-        } else if (jogador == 2) {
-            // Lógica para jogador 2
-        }
+	bool getVida(){
+		return vida;
+	}
 
-        corpos.setPosition(posiX, posY);
-    }
+    int movimentos(Player& jogador, sf::RectangleShape (*mapa)[40], int altura, int largura) {
 
-    int Movimentos(Player jogador, sf::RectangleShape (*mapa)[40]) {
-        while (coli == 0) {
-            mov.movimento();
-            corpos.setPosition(mov.pos[0], mov.pos[1]);
+    	corpo.move(0,velY);
 
-            if (corpos.getGlobalBounds().intersects(jogador.getCorpo().getGlobalBounds())) {
-                vida = 1;
-                break;
-            }
+    	for (int i = 0; i < altura; i++) {
+    		for (int j = 0; j < largura; j++) {
+    			if (mapa[i][j].getFillColor() == sf::Color::Blue) {
+    				if (corpo.getGlobalBounds().intersects(mapa[i][j].getGlobalBounds())) {
+    					corpo.move(0,-velY);
+    					if(velY != 0){
+    						velY = -velY;
+    					}else{
+    						vida = false;
+    					}
+    				}
+    			}
+    		}
+    	}
 
-            for (int i = 0; i < alt; i++) {
-                for (int j = 0; j < larg; j++) {
-                    if (mapa[i][j].getFillColor() == sf::Color::Blue) {
-                        if (corpos.getGlobalBounds().intersects(mapa[i][j].getGlobalBounds())) {
-                            vida = 1;
-                            break;
-                        }
-                    }
-                }
-            }
+    	corpo.move(velX,0);
 
-            if (corpos.getPosition().x < 0 || corpos.getPosition().x > larg) {
-                vida = 1;
-                break;
-            }
-        }
+    	for (int i = 0; i < altura; i++) {
+    		for (int j = 0; j < largura; j++) {
+    			if (mapa[i][j].getFillColor() == sf::Color::Blue) {
+    				if (corpo.getGlobalBounds().intersects(mapa[i][j].getGlobalBounds()))
+    					vida = false;
+    			}
+    		}
+    	}
+
+    	if ((corpo.getGlobalBounds().intersects(jogador.getCorpo().getGlobalBounds())) && (jogador.getCodigo() != codigoJogador)) {
+    		vida = false;
+    		jogador.getVida()--;
+    	}
 
         return vida;
     }
