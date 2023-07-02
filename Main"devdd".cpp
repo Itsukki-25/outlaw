@@ -17,6 +17,9 @@ int main() {
 	Janela* janela = new Janela();
 	int controlPanel = 0;
 
+
+
+
 	Controle con;
 	con.janela = janela;
 	con.controlPanel =&controlPanel;
@@ -33,8 +36,9 @@ int main() {
 	modo.janela = janela;
 	modo.controlPanel = &controlPanel;
 
-	musica.IniciarMusica(0);
+
 	while(janela->window.isOpen()) {
+
 		sf::Event ev;
 		while(janela->window.pollEvent(ev)) {
 			if (ev.type == sf::Event::Closed)
@@ -47,11 +51,14 @@ int main() {
 			meun.OMenu();
 			break;
 		case 1:
-			con.config(3);
+		modo.escolha();
 			break;
 		case 2:
+			final.UltimaTela();
 
 			break;
+		case 3:
+			con.config(2);
 		}
 
 		janela->window.display();
