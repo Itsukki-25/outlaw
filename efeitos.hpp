@@ -10,30 +10,47 @@
 class efeitos {
 public:
     sf::Font fonte;
-    sf::SoundBuffer tiro;
+    sf::SoundBuffer SomDoTiro;
     sf::Sound tiros;
     sf::Music musica;
-    sf::SoundBuffer clik;
+    sf::SoundBuffer SomDoClique;
     sf::Sound clique;
     sf::Texture textureFundo;
     sf::Sprite fundoImage;
-    sf::Texture Tbotao;
-    sf::Texture Mododejogo;
-    sf::Sprite Modo;
+    sf::Texture TexturaBotao;
+    sf::Texture FundoMododejogo;
+    sf::Sprite FundoModo;
 
     	efeitos()
     {
-    	Mododejogo.loadFromFile("assets/Modo.jpg");
-    	Modo.setTexture(Mododejogo);
-    	Tbotao.loadFromFile("assets/Tbotao.jpg");
+    	FundoMododejogo.loadFromFile("assets/Modo.jpg");
+    	FundoModo.setTexture(FundoMododejogo);
+    	TexturaBotao.loadFromFile("assets/Tbotao.jpg");
     	textureFundo.loadFromFile("assets/cowboy.jpg");
 		fundoImage.setTexture(textureFundo);
         fonte.loadFromFile("assets/fonte.TTF");
-        tiro.loadFromFile("assets/tiro.ogg");
-        tiros.setBuffer(tiro);
-        clik.loadFromFile("assets/clique.ogg");
-        clique.setBuffer(clik);
+        SomDoClique.loadFromFile("assets/clique.ogg");
+        clique.setBuffer(SomDoClique);
+        musica.openFromFile("assets/musica.ogg");
 
     }
+
+    	void cliqueBotao(){
+    		clique.play();
+    	}
+
+    	void IniciarMusica(int tocar){
+    		if (tocar==1){
+    			musica.setLoop(true);
+    			    		musica.play();
+    		}
+    		else{
+    			musica.stop();
+    		}
+
+    	}
+
+
 };
+
 #endif /* EFEITOS_HPP_ */
