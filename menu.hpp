@@ -17,49 +17,59 @@
 #include "efeitos.hpp"
 #include "Textos.hpp"
 #include "config.hpp"
+#include "Sombras.hpp"
 
 class menu {
 public:
 	Botao start;
 	Botao Sair;
+	Sombra SombraStart;
+	Sombra SombraSair;
 	Janela *janela;
-	efeitos efeito;
 	int *controlPanel;
+	efeitos efeito;
 	Textos titulo;
-	void Coisa() {
 
 
-		titulo.adicionarTexto("Outlaw", 150, 330, 100);
+	void OMenu() {
+	    sf::Vector2i mousePos = sf::Mouse::getPosition(janela->window);
+
+	    titulo.adicionarTexto("Outlaw", 150, 330, 100);
+	    start.estrutura.setPosition(150, 490);
+	   	SombraStart.Comportamento(300, 80, 160, 500);
+	    start.setTexture(efeito.TexturaBotao);
+	    start.setTexto(Text("Play", efeito.fonte, 60), efeito.fonte, 210, 480);
 
 
-		start.setTexture(efeito.Tbotao);
-		start.setTexto(Text("Play", efeito.fonte, 60), efeito.fonte,200,480);
-		start.estrutura.setPosition(150, 490);
+	    Sair.setTexture(efeito.TexturaBotao);
+	    Sair.setTexto(Text("Sair", efeito.fonte, 60), efeito.fonte, 100, 590);
+	    Sair.estrutura.setPosition(50, 600);
+	    SombraSair.Comportamento(300, 80, 60, 610);
 
-		Sair.setTexture(efeito.Tbotao);
-		Sair.setTexto(Text("Sair", efeito.fonte, 60), efeito.fonte,100,590);
-		Sair.estrutura.setPosition(50, 600);
+	    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+	        if (start.contemPonto(mousePos)) {
+	            efeito.cliqueBotao();
+	            std::cout << "Clicou no start\n";
+	            *controlPanel = 1;
+	        }
+	        if (Sair.contemPonto(mousePos)) {
+	            std::cout << "Clicou no sair\n";
+	            janela->window.close();
+	        }
+	    }
 
+	    // Atualizar a posição do mouse
+	    mousePos = sf::Mouse::getPosition(janela->window);
 
-		sf::Vector2i mousePos = sf::Mouse::getPosition(janela->window);
+	    // Atualizar a animação do botão "start" com base na posição do mouse
 
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-			if (start.contemPonto(mousePos)) {
-				std::cout << "Clicou no start\n";
-				*controlPanel = 1;
-			}
-			if (Sair.contemPonto(mousePos)) {
-				std::cout << "Clicou no sair\n";
-				janela ->window.close();
-			}
-		}
-
-		janela->window.draw(efeito.fundoImage);
-
-		titulo.desenharTextos(janela->window);
-		janela->window.draw(start);
-		janela->window.draw(Sair);
-			// Desenha backgroud
+	    janela->window.draw(efeito.fundoImage);
+	    titulo.desenharTextos(janela->window);
+	    janela->window.draw(SombraSair);
+	    janela->window.draw(SombraStart);
+	    janela->window.draw(start);
+	    janela->window.draw(Sair);
 	}
-
 };
+
+
