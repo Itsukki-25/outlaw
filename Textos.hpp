@@ -3,9 +3,11 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "Player.hpp"
 
 class Textos {
 public:
+	Player jogador;
 	std::vector<sf::Text> textos;
 
 	void adicionarTexto(const sf::String& conteudo, unsigned int tamanho, float posX, float posY) {
@@ -37,6 +39,17 @@ public:
 
 	}
 
+	void daVida(Player jogador,int qual,float tamanho,float posx,float posy){
+		if (qual==1){
+			char Avida=jogador.getVida();
+			adicionarTexto(Avida,tamanho,posx,posy);
+
+		} else {
+			char ABala=jogador.getVida();//getbalas
+			adicionarTexto(ABala,tamanho,posx,posy);
+		}
+
+	}
 
 
 	void desenharTextos(sf::RenderWindow& window) {
