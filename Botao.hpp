@@ -23,7 +23,7 @@ using namespace sf;
 class Botao : public Drawable {
 public:
 
-    RectangleShape estrutura,sombras;
+    RectangleShape estrutura;
 
     Text texto;
     float posX,posY;
@@ -59,6 +59,8 @@ public:
 
         target.draw(texto, states);
     }
+
+
 
 
     bool contemPonto(const sf::Vector2i& ponto) {
