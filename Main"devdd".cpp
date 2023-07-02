@@ -10,21 +10,30 @@
 #include "efeitos.hpp"
 #include "janela.hpp"
 #include "config.hpp"
+#include "TelaFinal.hpp"
 
 int main() {
+	efeitos musica;
 	Janela* janela = new Janela();
 	int controlPanel = 0;
+
+	Controle con;
+	con.janela = janela;
+	con.controlPanel =&controlPanel;
 
 	menu meun;
 	meun.janela = janela;
 	meun.controlPanel = &controlPanel;
 
+	Final final;
+	final.janela =janela;
+	final.controlPanel = &controlPanel;
 
 	Modo modo;
 	modo.janela = janela;
 	modo.controlPanel = &controlPanel;
 
-
+	musica.IniciarMusica(0);
 	while(janela->window.isOpen()) {
 		sf::Event ev;
 		while(janela->window.pollEvent(ev)) {
@@ -35,12 +44,16 @@ int main() {
 		janela->window.clear(sf::Color::Black);
 		switch(controlPanel){
 		case 0:
-			meun.Coisa();
+			meun.OMenu();
 			break;
 		case 1:
-			modo.escolha();
+			con.config(3);
+			break;
+		case 2:
+
 			break;
 		}
+
 		janela->window.display();
 	}
 
