@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <iostream>
-#include "Bot.hpp"
+#include "Botao.hpp"
 #include "janela.hpp"
 #include "efeitos.hpp"
 #include "Textos.hpp"
@@ -28,7 +28,8 @@ public:
 	Janela *janela;
 	efeitos efeito;
 	Textos Mododejogo;
-
+	bool	sontocando=true;
+		bool	musicaTocando =true;
 	int *controlPanel;
 
 	void escolha() {
@@ -36,22 +37,24 @@ public:
 		Solo.setTexture(efeito.TexturaBotao);
 		Solo.setTexto(Text("1 VS IA", efeito.fonte, 52), efeito.fonte,750,300);
 		Solo.estrutura.setPosition(700, 300);
-		SombraUm.Comportamento(300,80,710,310);
+		SombraUm.Comportamento(300,80,710,310,sf::Color::Black);
 
 
 		dois.setTexture(efeito.TexturaBotao);
 		dois.setTexto(Text("1 VS 1", efeito.fonte, 52), efeito.fonte,350,300);
 		dois.estrutura.setPosition(300,300);
-		SombraDois.Comportamento(300,80,310,310);
+		SombraDois.Comportamento(300,80,310,310,sf::Color::Black);
 		sf::Vector2i mousePos = sf::Mouse::getPosition(janela->window);
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			if (Solo.contemPonto(mousePos)) {
-				efeito.cliqueBotao();
+				efeito.Sons(sontocando);
 				std::cout << "TELA DIFERENTE1\n";
+				*controlPanel =3;
 			}
 			if (dois.contemPonto(mousePos)) {
-				efeito.cliqueBotao();
+				efeito.Sons(sontocando);
+				*controlPanel =3;
 				std::cout << "TELA DIFETENTE2\n";
 			}
 		}
