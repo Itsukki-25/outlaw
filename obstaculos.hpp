@@ -69,6 +69,34 @@ public:
 		spriteBolaDeFeno.setPosition(posx, posy);
 		sf::sleep(sf::seconds(0.05));
 	}
+void TestaLimite(sf::RenderWindow& window) {
+	    int limiteSuperior = 32;
+	    int limiteInferior = window.getSize().y - 32;
+	    int limiteEsquerdo = 32;
+	    int limiteDireito = window.getSize().x - 32;
+
+	    if (posy < limiteSuperior) {
+	        posy = limiteSuperior;
+	        vely = -vely;
+	    } else if (posy > limiteInferior) {
+	        posy = limiteInferior;
+	        vely = -vely;
+	    }
+
+	    if (posx < limiteEsquerdo) {
+	        posx = limiteEsquerdo;
+	        velx = -velx;
+	    } else if (posx > limiteDireito) {
+	        posx = limiteDireito;
+	        velx = -velx;
+	    }
+	}
+
+	void Desenha(sf::RenderWindow& window) {
+		window.clear();
+		window.draw(spriteBolaDeFeno);
+		window.display();
+	}
 
 	void Desenha(sf::RenderWindow& window) {
 		window.clear();
