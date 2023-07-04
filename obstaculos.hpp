@@ -103,6 +103,9 @@ void TestaLimite(sf::RenderWindow& window) {
 		window.draw(spriteBolaDeFeno);
 		window.display();
 	}
+	sf::RectangleShape getBolaDeFeno(){
+		return objetoBolaDeFeno;
+	}
 };
 
 class Trem: public Obstaculo {
