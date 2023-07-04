@@ -71,7 +71,7 @@ public:
 	}
 void TestaLimite(sf::RenderWindow& window) {
 	    int limiteSuperior = 32;
-	    int limiteInferior = window.getSize().y - 32;
+	    int limiteInferior = window.getSize().y - 96;
 	    int limiteEsquerdo = 32;
 	    int limiteDireito = window.getSize().x - 32;
 
