@@ -17,14 +17,14 @@
 #include "map.hpp"
 #include "player.hpp"
 #include "Bala.hpp"
-
+#include "Efeitos.hpp"
 class Fase{
 public:
 
 	vector<string> mapaString;
 	vector<Bala> balas;
 	bool jogoAcabou = false;
-
+	Efeito tiro;
 	void desenharBala(sf::RenderWindow& window, Mapa mapa, Player& jogador){
 
 		if(balas.size())
@@ -100,9 +100,11 @@ public:
 				    	jogador1Tecl2= true;
 				    }
 				    if(event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Up){
+					tiro.SomTiros();
 				    	jogador1Tecl2= true;
 				    }
 				    if(event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Down){
+					tiro.SomTiros();
 				    	jogador1Tecl2= true;
 				    }
 				    if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)){
@@ -112,9 +114,11 @@ public:
 				    	jogador2Tecl2= true;
 				    }
 				    if(event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::W){
+					tiro.SomTiros();
 				    	jogador2Tecl2= true;
 				    }
 				    if(event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::S){
+					tiro.SomTiros();
 				    	jogador2Tecl2= true;
 				    }
 
