@@ -68,7 +68,7 @@ public:
 			if (Voltar.contemPonto(mousePos)) {
 				std::cout << "Clicou no Voltar\n";
 				efeito.Sons(sontocando);
-				*controlPanel = 1;
+				*controlPanel = 0;
 			}
 			if (Salvar.contemPonto(mousePos)) {
 				std::cout << "Clicou no Salvar\n";
@@ -91,6 +91,7 @@ public:
 
 			}
 		}
+
 
 		// Atualizar a posição do mouse
 		mousePos = sf::Mouse::getPosition(janela->window);
