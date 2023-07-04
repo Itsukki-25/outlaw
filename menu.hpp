@@ -60,9 +60,7 @@ public:
 		 sf::Color cor(255, 128, 77, 255);
 		 BotaoConfig.setFillColor(cor);
 		 BotaoConfig.setPosition(1250,10);
-		sf::Text textoX("X", efeito.fonte, 40);
-		textoX.setPosition(1270, 20);
-		textoX.setFillColor(sf::Color::Black);
+		
 
 
 
@@ -99,7 +97,7 @@ public:
 		janela->window.draw(start);
 		janela->window.draw(Sair);
 		janela->window.draw(BotaoConfig);
-		janela->window.draw(TextoX);
+		
 	}
 };
 
