@@ -13,6 +13,8 @@
 #include <iterator>
 #include <SFML/Graphics.hpp>
 
+#include "bloco.hpp"
+
 class Player{
 
 protected:
@@ -28,6 +30,7 @@ protected:
 	int largura;
 	sf::Vector2i tamanho;
 	int vida;
+	int balas;
 	sf::RectangleShape corpo;
 
 public:
@@ -40,14 +43,15 @@ public:
 		this->posiY = 200;
 		this->posicao.x = 100;
 		this->posicao.y = 200;
-		this->altura = 120;
-		this->largura = 60;
+		this->altura = 200;
+		this->largura = 80;
 		this->vida = 5;
+		this->balas = 999;
 
 		std::cout << "Objeto 'Player' criado!" << std::endl;
 	}
 
-	Player(int VelX, int VelY, int PosiX, int PosiY, int Altura, int Largura, int Vida){
+	Player(int VelX, int VelY, int PosiX, int PosiY, int Altura, int Largura, int Vida, int Balas){
 
 		this->velX = VelX;
 		this->velY = VelY;
@@ -58,17 +62,18 @@ public:
 		this->altura = Altura;
 		this->largura = Largura;
 		this->vida = Vida;
+		this->balas = Balas;
 
 		std::cout << "Objeto 'Player' criado!" << std::endl;
 	}
 
 	void iniciarPlayer(){
-		corpo.setFillColor(sf::Color::Cyan);
+		//corpo.setFillColor(sf::Color::Cyan);
 		corpo.setPosition(posiX, posiY);
 		corpo.setSize(sf::Vector2f(largura, altura));
 	}
 
-	void movePlayer(sf::RectangleShape (*objeto)[40], int alt, int larg){
+	void movePlayer(Bloco (*objeto)[40], int alt, int larg){
 
 		bool colidiu;
 
@@ -76,8 +81,8 @@ public:
 
 		 for (int i = 0; i < alt; i++) {
 			 for (int j = 0; j < larg; j++) {
-				 if(objeto[i][j].getFillColor() == sf::Color::Blue){
-					 if(corpo.getGlobalBounds().intersects(objeto[i][j].getGlobalBounds())){
+				 if(objeto[i][j].solido){
+					 if(corpo.getGlobalBounds().intersects(objeto[i][j].corpo.getGlobalBounds())){
 						 colidiu = true;
 					 }
 				 }
@@ -98,8 +103,8 @@ public:
 
 		 for (int i = 0; i < alt; i++) {
 			 for (int j = 0; j < larg; j++) {
-				 if(objeto[i][j].getFillColor() == sf::Color::Blue){
-					 if(corpo.getGlobalBounds().intersects(objeto[i][j].getGlobalBounds())){
+				 if(objeto[i][j].solido){
+					 if(corpo.getGlobalBounds().intersects(objeto[i][j].corpo.getGlobalBounds())){
 						 colidiu = true;
 					 }
 				 }
@@ -131,6 +136,25 @@ public:
 		this->posicao.y = Y;
 	}
 
+	void setTexture(sf::Texture* Texture){
+		corpo.setTexture(Texture, true);
+		corpo.setTextureRect(sf::IntRect (1, 1, 31, 64));
+	}
+
+	void setTextureRect(int Tempo){
+
+		if(vida > 0){
+
+			if (Tempo % 2 != 0){
+				corpo.setTextureRect(sf::IntRect (1, 1, 31, 64));
+			}else{
+				Tempo = (Tempo / 2) + 1;
+				int x = 32*Tempo + 2 * Tempo;
+				corpo.setTextureRect(sf::IntRect (x+1, 1, 32, 64));
+			}
+		}
+	}
+
 	void setPosi(int X, int Y){
 		this->posiX = X;
 		this->posiY = Y;
@@ -141,6 +165,10 @@ public:
 
 	void setVelX(int X){
 		this->velX = X;
+	}
+
+	void setBalas(int Balas){
+		this->balas = Balas;
 	}
 
 	void setVelY(int Y){
@@ -191,6 +219,10 @@ public:
 		return vida;
 	}
 
+	int& getBalas(){
+		return balas;
+	}
+
 	sf::Vector2f getPosicaoV2f(){
 		return posicao;
 	}
@@ -204,8 +236,14 @@ public:
 	}
 
 	void desenharPlayer(sf::RenderWindow& window){
-		if(!vida)
-			corpo.setFillColor(sf::Color::Red);
+		if(!vida){
+			if(codigo == 2){
+			corpo.setTextureRect(sf::IntRect (2, 67, 26, 64));
+			}else{
+				corpo.setTextureRect(sf::IntRect (2, 67, 31, 64));
+			}
+		}
+		//corpo.update();
 		window.draw(corpo);
 		std::cout << "Player desenhado!" << std::endl;
 	}
