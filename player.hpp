@@ -19,132 +19,92 @@ class Player{
 
 protected:
 
-	int codigo = 0;
-	int velX;
-	int velY;
-	sf::Vector2i velocidade;
-	int posiX;
-	int posiY;
-	sf::Vector2f posicao;
-	int altura;
-	int largura;
-	sf::Vector2i tamanho;
-	int vida;
-	int balas;
 	sf::RectangleShape corpo;
+	sf::Vector2i velocidade;
+	sf::Vector2f posicao;
+	sf::Vector2i tamanho;
+	int numeroVida;
+	int numeroBalas;
+	int idPlayer = 0;
+
+	bool testeColisaoMapa(Bloco (*mapa)[40], int numeroLinhas, int numeroColunas){
+
+		bool colisao;
+
+		 for (int i = 0; i < numeroLinhas; i++) {
+			 for (int j = 0; j < numeroColunas; j++) {
+				 if(mapa[i][j].solido){
+					 if(corpo.getGlobalBounds().intersects(mapa[i][j].corpo.getGlobalBounds())){
+						 colisao = true;
+					 }
+				 }
+			 }
+		 }
+
+		return colisao;
+	}
 
 public:
 
 	Player(){
 
-		this->velX = 0;
-		this->velY = 0;
-		this->posiX = 100;
-		this->posiY = 200;
+		this->velocidade.x = 0;
+		this->velocidade.y = 0;
 		this->posicao.x = 100;
 		this->posicao.y = 200;
-		this->altura = 200;
-		this->largura = 80;
-		this->vida = 5;
-		this->balas = 999;
+		this->tamanho.x = 80;
+		this->tamanho.y = 200;
+		this->numeroVida = 5;
+		this->numeroBalas = 8;
+		this->corpo.setPosition(posicao.x, posicao.y);
+		this->corpo.setSize(sf::Vector2f(tamanho.x, tamanho.y));
 
 		std::cout << "Objeto 'Player' criado!" << std::endl;
 	}
 
-	Player(int VelX, int VelY, int PosiX, int PosiY, int Altura, int Largura, int Vida, int Balas){
+	Player(int VelocidadeX, int VelocidadeY, int PosicaoX, int PosicaoY, int AlturaPlayer, int LarguraPlayer, int NumeroVida, int NumeroBalas){
 
-		this->velX = VelX;
-		this->velY = VelY;
-		this->posiX = PosiX;
-		this->posiY = PosiY;
-		this->posicao.x = PosiX;
-		this->posicao.y = PosiY;
-		this->altura = Altura;
-		this->largura = Largura;
-		this->vida = Vida;
-		this->balas = Balas;
+		this->velocidade.x = VelocidadeX;
+		this->velocidade.y = VelocidadeY;
+		this->posicao.x = PosicaoX;
+		this->posicao.y = PosicaoY;
+		this->tamanho.x = LarguraPlayer;
+		this->tamanho.y = AlturaPlayer;
+		this->numeroVida = NumeroVida;
+		this->numeroBalas = NumeroBalas;
+		this->corpo.setPosition(posicao.x, posicao.y);
+		this->corpo.setSize(sf::Vector2f(tamanho.x, tamanho.y));
 
 		std::cout << "Objeto 'Player' criado!" << std::endl;
 	}
 
 	void iniciarPlayer(){
-		//corpo.setFillColor(sf::Color::Cyan);
-		corpo.setPosition(posiX, posiY);
-		corpo.setSize(sf::Vector2f(largura, altura));
+		corpo.setPosition(posicao.x, posicao.y);
+		corpo.setSize(sf::Vector2f(tamanho.x, tamanho.y));
 	}
 
-	void movePlayer(Bloco (*objeto)[40], int alt, int larg){
+	void moverPlayer(Bloco (*mapa)[40], int numeroLinhas, int numeroColunas){
 
-		bool colidiu;
+		corpo.move(0,velocidade.y);
 
-		corpo.move(0,velY);
+		if(testeColisaoMapa( mapa , numeroLinhas, numeroColunas))
+			corpo.move(0,-velocidade.y);
 
-		 for (int i = 0; i < alt; i++) {
-			 for (int j = 0; j < larg; j++) {
-				 if(objeto[i][j].solido){
-					 if(corpo.getGlobalBounds().intersects(objeto[i][j].corpo.getGlobalBounds())){
-						 colidiu = true;
-					 }
-				 }
-			 }
-		 }
+		velocidade.y = 0;
 
-		 if(colidiu == true){
-			 std::cout << "Colisao detectada com um obstaculo!" << std::endl;
-			 colidiu = false;
+		corpo.move(velocidade.x,0);
 
-			 corpo.move(0,-velY);
+		if(testeColisaoMapa( mapa , numeroLinhas, numeroColunas))
+			corpo.move(-velocidade.x,0);
 
-		 }
+		velocidade.x = 0;
 
-		 velY = 0;
+		posicao = corpo.getPosition();
 
-		 corpo.move(velX,0);
-
-		 for (int i = 0; i < alt; i++) {
-			 for (int j = 0; j < larg; j++) {
-				 if(objeto[i][j].solido){
-					 if(corpo.getGlobalBounds().intersects(objeto[i][j].corpo.getGlobalBounds())){
-						 colidiu = true;
-					 }
-				 }
-			 }
-		 }
-
-		 if(colidiu == true){
-			 std::cout << "ColisÃ£o detectada com um obstaculo!" << std::endl;
-			 colidiu = false;
-
-			 corpo.move(-velX,0);
-
-		 }
-
-		 velX = 0;
-
-		 posicao = corpo.getPosition();
-		 posiX = posicao.x;
-		 posiY = posicao.y;
 	}
 
-	void setPosiX(int X){
-		this->posiX = X;
-		this->posicao.x = X;
-	}
-
-	void setPosiY(int Y){
-		this->posiY = Y;
-		this->posicao.y = Y;
-	}
-
-	void setTexture(sf::Texture* Texture){
-		corpo.setTexture(Texture, true);
-		corpo.setTextureRect(sf::IntRect (1, 1, 31, 64));
-	}
-
-	void setTextureRect(int Tempo){
-
-		if(vida > 0){
-
+	void changeFrame(int Tempo){
+		if(numeroVida > 0){
 			if (Tempo % 2 != 0){
 				corpo.setTextureRect(sf::IntRect (1, 1, 31, 64));
 			}else{
@@ -155,95 +115,77 @@ public:
 		}
 	}
 
-	void setPosi(int X, int Y){
-		this->posiX = X;
-		this->posiY = Y;
+	void setTexture(sf::Texture* Texture){
+		corpo.setTexture(Texture, true);
+		corpo.setTextureRect(sf::IntRect (1, 1, 31, 64));
+	}
+
+	void setPosiX(int X){
 		this->posicao.x = X;
+	}
+
+	void setPosiY(int Y){
 		this->posicao.y = Y;
-		corpo.setPosition(posiX, posiY);
 	}
 
-	void setVelX(int X){
-		this->velX = X;
+	void setPosi(int PosicaoX, int PosicaoY){
+		this->posicao.x = PosicaoX;
+		this->posicao.y = PosicaoY;
+		corpo.setPosition(PosicaoX,PosicaoY);
 	}
 
-	void setBalas(int Balas){
-		this->balas = Balas;
+	void setVelocidadeX(int Velocidade){
+		this->velocidade.x = Velocidade;
 	}
 
-	void setVelY(int Y){
-		this->velY = Y;
+	void setVelocidadeY(int Velocidade){
+		this->velocidade.y = Velocidade;
 	}
 
-	void setCodigo(int Codigo){
-		this->codigo = Codigo;
+	void setNumeroBalas(int Balas){
+		this->numeroBalas = Balas;
 	}
 
-	void setAltura(int alt,sf::RectangleShape (*objeto)[40], int altu, int larg){
-
-		corpo.setSize(sf::Vector2f(largura, alt));
-
-		bool colidiu;
-
-		 for (int i = 0; i < altu; i++) {
-			 for (int j = 0; j < larg; j++) {
-				 if(objeto[i][j].getFillColor() == sf::Color::Blue){
-					 if(corpo.getGlobalBounds().intersects(objeto[i][j].getGlobalBounds())){
-						 colidiu = true;
-					 }
-				 }
-			 }
-		 }
-
-		 if(colidiu == true){
-			 std::cout << "Colisao detectada com um obstaculo!" << std::endl;
-			 colidiu = false;
-
-			 corpo.setSize(sf::Vector2f(largura, altura));
-
-		 }else{
-			 this->altura = alt;
-		 }
-
+	void setIdPlayer(int numeroId){
+		this->idPlayer = numeroId;
 	}
 
 	sf::RectangleShape getCorpo(){
 		return corpo;
 	}
 
-	int getCodigo(){
-		return codigo;
+	int getIdPlayer(){
+		return idPlayer;
 	}
 
-	int& getVida(){
-		return vida;
+	int& getNumeroVida(){
+		return numeroVida;
 	}
 
-	int& getBalas(){
-		return balas;
+	int& getNumeroBalas(){
+		return numeroBalas;
 	}
 
 	sf::Vector2f getPosicaoV2f(){
 		return posicao;
 	}
 
-	int getVelX(){
-		return velX;
+	int getVelocidadeX(){
+		return velocidade.x;
 	}
 
-	int getVelY(){
-		return velY;
+	int getVelocidadeY(){
+		return velocidade.y;
 	}
 
 	void desenharPlayer(sf::RenderWindow& window){
-		if(!vida){
-			if(codigo == 2){
+		if(!numeroVida){
+			if(idPlayer == 2){
 			corpo.setTextureRect(sf::IntRect (2, 67, 26, 64));
 			}else{
 				corpo.setTextureRect(sf::IntRect (2, 67, 31, 64));
 			}
 		}
-		//corpo.update();
 		window.draw(corpo);
 		std::cout << "Player desenhado!" << std::endl;
 	}
