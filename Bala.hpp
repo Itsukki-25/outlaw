@@ -25,10 +25,13 @@ public:
 
     	this->codigoJogador = jogador.getCodigo();
 		this->posiX = jogador.getPosicaoV2f().x;
-		this->posiY = jogador.getPosicaoV2f().y;
+		this->posiY = jogador.getPosicaoV2f().y - 20;
 		this->velX = VelX;
 		this->velY = VelY;
-		this->corpo.setPosition(jogador.getPosicaoV2f());
+		if(jogador.getCodigo() == 1)
+			this->corpo.setPosition(jogador.getPosicaoV2f().x, jogador.getPosicaoV2f().y + 80);
+		if(jogador.getCodigo() == 2)
+			this->corpo.setPosition(jogador.getPosicaoV2f().x + 75, jogador.getPosicaoV2f().y + 78);
 		this->corpo.setFillColor(sf::Color::Yellow);
 		corpo.setSize(sf::Vector2f(largura, altura));
     }
@@ -37,14 +40,14 @@ public:
 		return vida;
 	}
 
-    int movimentos(Player& jogador, sf::RectangleShape (*mapa)[40], int altura, int largura) {
+    int movimentos(Player& jogador, Bloco (*mapa)[40], int altura, int largura) {
 
     	corpo.move(0,velY);
 
     	for (int i = 0; i < altura; i++) {
     		for (int j = 0; j < largura; j++) {
-    			if (mapa[i][j].getFillColor() == sf::Color::Blue) {
-    				if (corpo.getGlobalBounds().intersects(mapa[i][j].getGlobalBounds())) {
+    			if (mapa[i][j].solido) {
+    				if (corpo.getGlobalBounds().intersects(mapa[i][j].corpo.getGlobalBounds())) {
     					corpo.move(0,-velY);
     					if(velY != 0){
     						velY = -velY;
@@ -60,8 +63,8 @@ public:
 
     	for (int i = 0; i < altura; i++) {
     		for (int j = 0; j < largura; j++) {
-    			if (mapa[i][j].getFillColor() == sf::Color::Blue) {
-    				if (corpo.getGlobalBounds().intersects(mapa[i][j].getGlobalBounds()))
+    			if (mapa[i][j].solido) {
+    				if (corpo.getGlobalBounds().intersects(mapa[i][j].corpo.getGlobalBounds()))
     					vida = false;
     			}
     		}
