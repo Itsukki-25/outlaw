@@ -39,7 +39,7 @@ bool Ganhador(int ID_ganhador, sf::RenderWindow& window){
 
 		window.clear();
 		window.draw(ProximaFase);
-		window.draw(SombraProximaFase.sombra);
+		window.draw(SombraProximaFase);
 		Ganhador.desenharTextos(window);
 		window.display();
 
