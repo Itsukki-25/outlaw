@@ -1,6 +1,6 @@
 
-#ifndef config_HPP_
-#define config_HPP_
+#ifndef configuracao_HPP_
+#define configuracao_HPP_
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
