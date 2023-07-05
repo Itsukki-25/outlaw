@@ -38,6 +38,7 @@ bool Ganhador(int ID_ganhador, sf::RenderWindow& window){
 	while(loop){
 
 		window.clear();
+		janela->window.draw(efeitos.fundoImage);
 		window.draw(ProximaFase);
 		window.draw(SombraProximaFase);
 		Ganhador.desenharTextos(window);
