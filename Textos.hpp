@@ -5,7 +5,7 @@
 #include <vector>
 #include "Player.hpp"
 
-class Textos {
+class Texto {
 public:
 	Player jogador;
 	std::vector<sf::Text> textos;
