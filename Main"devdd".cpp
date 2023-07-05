@@ -54,7 +54,7 @@ int main() {
 			meun.OMenu();
 			break;
 		case 1:
-		fase.fase();
+		fase.iniciarjogo();
 			break;
 		case 2:
 			final.UltimaTela();
