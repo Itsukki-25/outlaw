@@ -57,8 +57,7 @@ int main() {
 		fase.iniciarjogo();
 			break;
 		case 2:
-			modo.
-
+			modo.escolha();
 			break;
 		case 3:
 			final.UltimaTela();
