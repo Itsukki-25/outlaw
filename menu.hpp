@@ -93,8 +93,8 @@ public:
 
 		janela->window.draw(efeito.fundoImage);
 		titulo.desenharTextos(janela->window);
-		janela->window.draw(SombraSair.sombra);
-		janela->window.draw(SombraStart.sombra);
+		janela->window.draw(SombraSair);
+		janela->window.draw(SombraStart);
 		janela->window.draw(start);
 		janela->window.draw(Sair);
 		janela->window.draw(BotaoConfig);
