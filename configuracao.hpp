@@ -100,10 +100,10 @@ public:
 
 		janela->window.draw(efeito.FundoParaAsConfig);
 		Config.desenharTextos(janela->window);
-		janela->window.draw(SombraVoltar.sombra);
-		janela->window.draw(SombraSalvar.sombra);
-		janela->window.draw(SombraSons.sombra);
-		janela->window.draw(SombraMusica.sombra);
+		janela->window.draw(SombraVoltar);
+		janela->window.draw(SombraSalvar);
+		janela->window.draw(SombraSons);
+		janela->window.draw(SombraMusica);
 		janela->window.draw(Salvar);
 		janela->window.draw(Sons);
 		janela->window.draw(Musica);
