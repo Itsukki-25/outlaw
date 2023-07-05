@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <iostream>
-#include "efeitos.hpp"
+#include "Efeito.hpp"
 using namespace sf;
 
 #ifndef DECLARACOES_HPP_
