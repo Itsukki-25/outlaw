@@ -2,67 +2,79 @@
 #define MOVEL_HPP_
 
 #include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include <iostream>
 
-class Movel {
-public:
-    float pos[2], dir[2], vel;
-    bool colisao;
-    sf::RectangleShape corpos;
-	int velX;
-	int velY;
-	int posiX;
-	int posiY;
+using namespace std;
+using namespace sf;
+
+class Movel{
+protected:
+
+	sf::RectangleShape corpo;
 	sf::Vector2f posicao;
-    int altura = 5;
-    int largura = 5;
-	sf::Vector2f tamanho;
+	sf::Vector2i tamanho;
+	sf::Vector2i velocidade;
+	int numeroVida;
+
+	bool testeColisaoMapa(Bloco (*mapa)[40], int numeroLinhas, int numeroColunas){
+
+		bool colisao;
+
+		 for (int i = 0; i < numeroLinhas; i++) {
+			 for (int j = 0; j < numeroColunas; j++) {
+				 if(mapa[i][j].solido){
+					 if(corpo.getGlobalBounds().intersects(mapa[i][j].corpo.getGlobalBounds())){
+						 colisao = true;
+					 }
+				 }
+			 }
+		 }
+
+		return colisao;
+	};
+
+public:
+
+	int& getNumeroVida(){
+		return numeroVida;
+	}
+
+	sf::Vector2f getPosicaoV2f(){
+		return posicao;
+	}
+
+	int getVelocidadeX(){
+		return velocidade.x;
+	}
+
+	int getVelocidadeY(){
+		return velocidade.y;
+	}
 
 	RectangleShape getCorpo(){
 		return corpo;
 	}
 
-protected:
-    bool tcolisao(bool coli, sf::RectangleShape corpo) {
-        this->colisao = coli;
-        this->corpos = corpo;
-        return coli;
-    }
+	void setPoscaoX(int X){
+		this->posicao.x = X;
+	}
 
-    virtual float Direcao(float dir[1] = 0) {
-        this->dir[1] = dir[1];
+	void setPosicaoY(int Y){
+		this->posicao.y = Y;
+	}
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-            dir[1] = 1;
-        }
+	void setPosicao(int PosicaoX, int PosicaoY){
+		this->posicao.x = PosicaoX;
+		this->posicao.y = PosicaoY;
+		corpo.setPosition(PosicaoX,PosicaoY);
+	}
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-            dir[1] = -1;
-        }
+	void setVelocidadeX(int Velocidade){
+		this->velocidade.x = Velocidade;
+	}
 
-        return dir[1];
-    }
+	void setVelocidadeY(int Velocidade){
+		this->velocidade.y = Velocidade;
+	}
 
-    virtual float movimento(float pos[0]) {
-        this->pos[0] = pos[0];
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-            pos[1] = pos[1] + (dir[1] * vel);
-        }
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-            pos[1] = pos[1] + (dir[1] * vel);
-        }
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-            pos[0] = pos[0] + (vel * 1);
-        }
-
-        return pos[0];
-    }
-
-    virtual ~Movel() {}
 };
-
-#endif /* MOVEL_HPP_ */
+#endif
