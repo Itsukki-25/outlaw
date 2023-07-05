@@ -6,73 +6,78 @@
 #include "player.hpp"
 #include "Movel.hpp"
 
-class Bala : public movel {
-
+class Bala : public Movel {
 private:
 
-    bool coli = false;
     bool vida = true;
-    int direcaoY = 0;
-    int direcaoX = 0;
-    sf::Vector2f posicao;
-    int codigoJogador = 0;
-    //sf::Vector2u ;
-
+    int codigoJogador;
 
 public:
 
-    Bala( int VelX, int VelY, Player jogador ){
+    Bala( int VelocidadeX, int VelocidadeY, Player player ){
 
-    	this->codigoJogador = jogador.getCodigo();
-		this->posiX = jogador.getPosicaoV2f().x;
-		this->posiY = jogador.getPosicaoV2f().y - 20;
-		this->velX = VelX;
-		this->velY = VelY;
-		if(jogador.getCodigo() == 1)
-			this->corpo.setPosition(jogador.getPosicaoV2f().x, jogador.getPosicaoV2f().y + 80);
-		if(jogador.getCodigo() == 2)
-			this->corpo.setPosition(jogador.getPosicaoV2f().x + 75, jogador.getPosicaoV2f().y + 78);
+    	this->codigoJogador = player.getIdPlayer();
+		this->posicao.x = player.getPosicaoV2f().x;
+		this->posicao.y = player.getPosicaoV2f().y - 20;
+		this->velocidade.x = VelocidadeX;
+		this->velocidade.y = VelocidadeY;
+		this->tamanho.x = 5;
+		this->tamanho.y = 5;
+		this->numeroVida = 2;
+
+		if(player.getIdPlayer() == 1)
+			this->corpo.setPosition(player.getPosicaoV2f().x, player.getPosicaoV2f().y + 50);
+		if(player.getIdPlayer() == 2)
+			this->corpo.setPosition(player.getPosicaoV2f().x + 55, player.getPosicaoV2f().y + 50);
+
 		this->corpo.setFillColor(sf::Color::Yellow);
-		corpo.setSize(sf::Vector2f(largura, altura));
+		corpo.setSize(sf::Vector2f(tamanho.x, tamanho.y));
     }
 
-	bool getVida(){
+	bool& getVidaBala(){
 		return vida;
 	}
 
-    int movimentos(Player& jogador, Bloco (*mapa)[40], int altura, int largura) {
+    int movimentos(Player& player, Bloco (*mapa)[40], int numeroLinhas, int numeroColunas) {
 
-    	corpo.move(0,velY);
+    	corpo.move(0,velocidade.y);
 
-    	for (int i = 0; i < altura; i++) {
-    		for (int j = 0; j < largura; j++) {
-    			if (mapa[i][j].solido) {
-    				if (corpo.getGlobalBounds().intersects(mapa[i][j].corpo.getGlobalBounds())) {
-    					corpo.move(0,-velY);
-    					if(velY != 0){
-    						velY = -velY;
-    					}else{
-    						vida = false;
-    					}
-    				}
-    			}
-    		}
-    	}
+    	bool colisaEixoY = false;
 
-    	corpo.move(velX,0);
+		if(testeColisaoMapa( mapa, numeroLinhas, numeroColunas)){
 
-    	for (int i = 0; i < altura; i++) {
-    		for (int j = 0; j < largura; j++) {
-    			if (mapa[i][j].solido) {
-    				if (corpo.getGlobalBounds().intersects(mapa[i][j].corpo.getGlobalBounds()))
-    					vida = false;
-    			}
-    		}
-    	}
+			colisaEixoY = true;
 
-    	if ((corpo.getGlobalBounds().intersects(jogador.getCorpo().getGlobalBounds())) && (jogador.getCodigo() != codigoJogador)) {
+			corpo.move(0,-velocidade.y);
+			numeroVida--;
+			if(velocidade.y != 0)
+				velocidade.y = -velocidade.y;
+
+			if(numeroVida<0)
+				vida = false;
+
+		}
+
+    	corpo.move(velocidade.x,0);
+
+		if(testeColisaoMapa( mapa, numeroLinhas, numeroColunas)){
+			corpo.move(-velocidade.x,0);
+			numeroVida--;
+
+			if(velocidade.y == 0 || !colisaEixoY)
+				velocidade.x = -velocidade.x;
+
+			if(velocidade.y == 0)
+				numeroVida--;
+
+			if(numeroVida<0)
+				vida = false;
+
+		}
+
+    	if ((corpo.getGlobalBounds().intersects(player.getCorpo().getGlobalBounds())) && (player.getIdPlayer() != codigoJogador)) {
     		vida = false;
-    		jogador.getVida()--;
+    		player.getNumeroVida()--;
     	}
 
         return vida;
