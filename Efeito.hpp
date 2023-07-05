@@ -1,5 +1,5 @@
-#ifndef EFEITOS_HPP_
-#define EFEITOS_HPP_
+#ifndef EFEITO_HPP_
+#define EFEITO_HPP_
 
 class efeitos {
 public:
@@ -72,4 +72,4 @@ public:
 	}
 };
 
-#endif /* EFEITOS_HPP_ */
+#endif /* EFEITO_HPP_ */
