@@ -1,5 +1,5 @@
-#ifndef TEXTOS_HPP_
-#define TEXTOS_HPP_
+#ifndef TEXTO_HPP_
+#define TEXTO_HPP_
 
 #include <SFML/Graphics.hpp>
 #include <vector>
@@ -63,4 +63,4 @@ private:
 	efeitos fonte;
 };
 
-#endif /* TEXTOS_HPP_ */
+#endif /* TEXTO_HPP_ */
