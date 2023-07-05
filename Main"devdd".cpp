@@ -7,9 +7,9 @@
 
 #include "Menu.hpp"
 #include "ModoDeJogo.hpp"
-#include "efeitos.hpp"
+#include "Efeito.hpp"
 #include "janela.hpp"
-#include "config.hpp"
+#include "configuracao.hpp"
 #include "TelaFinal.hpp"
 
 int main() {
