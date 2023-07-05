@@ -61,8 +61,8 @@ public:
 		}
 		janela->window.draw(efeito.FundoModo);
 		Mododejogo.desenharTextos(janela->window);
-		janela->window.draw(SombraUm.sombra);
-		janela->window.draw(SombraDois.sombra);
+		janela->window.draw(SombraUm);
+		janela->window.draw(SombraDois);
 		janela->window.draw(Solo);
 		janela->window.draw(dois);
 	}
