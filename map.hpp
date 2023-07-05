@@ -10,6 +10,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "player.hpp"
+#include "obstaculos.hpp"
 #include "bloco.hpp"
 
 class Mapa{
@@ -40,46 +41,81 @@ public:
 		std::cout << "Objeto 'Mapa' criado!" << std::endl;
 	}
 
-	void definirValorCasas(std::vector<std::string>& mapa, Player& jogador1, Player& jogador2, sf::Texture* areiaTextura){
+	void definirValorCasas(std::vector<std::string>& mapa, Player& jogador1, Player& jogador2, sf::Texture* areiaTextura,
+			sf::Texture* cactoTextura,sf::Texture* bolaFenoTextura, std::vector<BolaFeno>& bolasDeFeno){
 
-		int t = 0;
+		srand((unsigned) time(NULL));
+
 		std::cout << "mapa 1!" << std::endl;
 	        for (int i = 0; i < altura; i++) {
 	            for (int j = 0; j < largura; j++) {
-	            	std::cout << "mapa 2!" << std::endl;
+
 	                casas[i][j].corpo = sf::RectangleShape(sf::Vector2f(tamanhoCasa, tamanhoCasa));
 	                casas[i][j].corpo.setPosition(j * tamanhoCasa, i * tamanhoCasa);
-	                t++;
-	                std::cout << t << std::endl;
-	                std::cout << i << std::endl;
-	                std::cout << j  << std::endl;
-	                if (mapa[i][j] == '#'){
-	                	std::cout << "mapa 3!" << std::endl;
+
+	                if(mapa[i][j] == '#'){
+
 	                    casas[i][j].corpo.setTexture(areiaTextura);
 		                casas[i][j].solido = true;
+		                casas[i][j].visivel = true;
+
 	                }else if(mapa[i][j] == '*'){
-	                	std::cout << "mapa 4!" << std::endl;
+	                	casas[i][j].corpo.setTexture(cactoTextura);
+	                	casas[i][j].visivel = true;
 	                	casas[i][j].solido = false;
+
+	                	switch( 1+(rand() % 3)){
+	                	case 1:
+	                		casas[i][j].corpo.setTextureRect(sf::IntRect (3, 34, 30, 32));
+	                		break;
+	                	case 2:
+	                		if((!casas[i-1][j].solido) && (!casas[i-1][j].visivel)){
+	                		casas[i-1][j].corpo.setTexture(cactoTextura);
+	                		casas[i-1][j].corpo.setTextureRect(sf::IntRect (39, 7, 26, 29));
+	                		casas[i][j].corpo.setTextureRect(sf::IntRect (39, 36, 26, 29));
+	                		casas[i-1][j].visivel = true;
+	                		}else{
+	                			casas[i][j].corpo.setTextureRect(sf::IntRect (39, 7, 26, 58));
+	                		}
+	                		break;
+	                	case 3:
+	                		if((!casas[i-1][j].solido) && (!casas[i-1][j].visivel)){
+	                		casas[i-1][j].corpo.setTexture(cactoTextura);
+	                		casas[i-1][j].corpo.setTextureRect(sf::IntRect (71, 7, 27, 23));
+	                		casas[i][j].corpo.setTextureRect(sf::IntRect (71, 30, 27, 27));
+	                		casas[i-1][j].visivel = true;
+	                		}else{
+	                			casas[i][j].corpo.setTextureRect(sf::IntRect (71, 12, 27, 53));
+	                		}
+	                		break;
+	                	case 4:// o case 4 nao vai aparecer propositalmente *achei que não combinou*
+	                		casas[i][j].corpo.setTextureRect(sf::IntRect (7, 117, 24, 14));
+	                		break;
+	                	}
 	                }else if(mapa[i][j] == '1'){
-	                	std::cout << "mapa 5!" << std::endl;
-	                    jogador1.setPosi(j * tamanhoCasa, i * tamanhoCasa);
+
+	                    jogador1.setPosicao(j * tamanhoCasa, i * tamanhoCasa);
 	                    casas[i][j].solido = false;
+	                    casas[i][j].visivel = false;
 	                }else if(mapa[i][j] == '2'){
-	                	std::cout << "mapa 6!" << std::endl;
-	                    jogador2.setPosi(j * tamanhoCasa, i * tamanhoCasa);
+
+	                    jogador2.setPosicao(j * tamanhoCasa, i * tamanhoCasa);
 	                    casas[i][j].solido = false;
-	                }else{
-	                	std::cout << "mapa 7!" << std::endl;
+	                    casas[i][j].visivel = false;
+	                }else if(mapa[i][j] == '@'){
 	                	casas[i][j].solido = false;
+	                	casas[i][j].visivel = false;
+	                	bolasDeFeno.push_back(BolaFeno(j * tamanhoCasa, i * tamanhoCasa, 1));
+	                	bolasDeFeno.back().getBolaDeFeno().setTexture(bolaFenoTextura);
+	                	bolasDeFeno.back().setConfigTexture();
+	                	std::cout << "criei feno!" << std::endl;
+	                }else{
+	                	casas[i][j].solido = false;
+	                	casas[i][j].visivel = false;
 	                }
 	            }
 	        }
-	        std::cout << "Mapa definido!" << std::endl;
 	    }
-
-//	sf::RectangleShape (*getCasa())[40]{
-//		return casas;
-//	}
 
 	Bloco  (*getCasa())[40]{
 		return casas;
@@ -96,7 +132,7 @@ public:
 	void desenharMapa(sf::RenderWindow& window){
 		for (int i = 0; i < altura; i++) {
 			for (int j = 0; j < largura; j++) {
-				if(casas[i][j].solido)
+				if(casas[i][j].visivel)
 				window.draw(casas[i][j].corpo);
 		    }
 		}
