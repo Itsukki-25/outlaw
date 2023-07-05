@@ -9,26 +9,27 @@
 #ifndef SOMBRAS_HPP_
 #define SOMBRAS_HPP_
 
-class Sombra{
-
+class Sombra : public sf::Drawable {
 public:
-	sf::RectangleShape sombra;
-	void Comportamento(float tamanhox,float tamanhoy,float posx,float posy, sf::Color cor){
+    sf::RectangleShape sombra;
 
-		sombra.setScale(tamanhox,tamanhoy);
-		sombra.setPosition(posx,posy);
-		sombra.setFillColor(cor);
-	}
+    void Comportamento(float width, float height, float posX, float posY,sf::Color cor) {
+        sombra.setSize(sf::Vector2f(width, height));
+        sombra.setPosition(posX, posY);
+        sombra.setFillColor(cor); // Define a cor e a transparência da sombra
+    }
+    void animacao(float posx,float posy){
+       	sombra.setPosition(posx -5, posy-5);
+       }
 
-	 void draw(RenderTarget& target, RenderStates states){
 
-	    	target.draw(sombra, states);
-
-
-	    }
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
+        target.draw(sombra, states);
+    }
 
 
 };
+
 
 
 
