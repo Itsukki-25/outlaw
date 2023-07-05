@@ -1,11 +1,5 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
-/*
- * player.hpp
- *
- *  Created on: 21 de mai. de 2023
- *      Author: Davi O
- */
 
 #include <iostream>
 #include <vector>
@@ -14,35 +8,13 @@
 #include <SFML/Graphics.hpp>
 
 #include "bloco.hpp"
+#include "Movel.hpp"
 
-class Player{
+class Player : public Movel{
+private:
 
-protected:
-
-	sf::RectangleShape corpo;
-	sf::Vector2i velocidade;
-	sf::Vector2f posicao;
-	sf::Vector2i tamanho;
-	int numeroVida;
 	int numeroBalas;
 	int idPlayer = 0;
-
-	bool testeColisaoMapa(Bloco (*mapa)[40], int numeroLinhas, int numeroColunas){
-
-		bool colisao;
-
-		 for (int i = 0; i < numeroLinhas; i++) {
-			 for (int j = 0; j < numeroColunas; j++) {
-				 if(mapa[i][j].solido){
-					 if(corpo.getGlobalBounds().intersects(mapa[i][j].corpo.getGlobalBounds())){
-						 colisao = true;
-					 }
-				 }
-			 }
-		 }
-
-		return colisao;
-	}
 
 public:
 
@@ -52,15 +24,15 @@ public:
 		this->velocidade.y = 0;
 		this->posicao.x = 100;
 		this->posicao.y = 200;
-		this->tamanho.x = 80;
-		this->tamanho.y = 200;
+		this->tamanho.x = 64;
+		this->tamanho.y = 128;
 		this->numeroVida = 5;
 		this->numeroBalas = 8;
 		this->corpo.setPosition(posicao.x, posicao.y);
 		this->corpo.setSize(sf::Vector2f(tamanho.x, tamanho.y));
 
 		std::cout << "Objeto 'Player' criado!" << std::endl;
-	}
+	};
 
 	Player(int VelocidadeX, int VelocidadeY, int PosicaoX, int PosicaoY, int AlturaPlayer, int LarguraPlayer, int NumeroVida, int NumeroBalas){
 
@@ -76,7 +48,7 @@ public:
 		this->corpo.setSize(sf::Vector2f(tamanho.x, tamanho.y));
 
 		std::cout << "Objeto 'Player' criado!" << std::endl;
-	}
+	};
 
 	void iniciarPlayer(){
 		corpo.setPosition(posicao.x, posicao.y);
@@ -120,28 +92,6 @@ public:
 		corpo.setTextureRect(sf::IntRect (1, 1, 31, 64));
 	}
 
-	void setPosiX(int X){
-		this->posicao.x = X;
-	}
-
-	void setPosiY(int Y){
-		this->posicao.y = Y;
-	}
-
-	void setPosi(int PosicaoX, int PosicaoY){
-		this->posicao.x = PosicaoX;
-		this->posicao.y = PosicaoY;
-		corpo.setPosition(PosicaoX,PosicaoY);
-	}
-
-	void setVelocidadeX(int Velocidade){
-		this->velocidade.x = Velocidade;
-	}
-
-	void setVelocidadeY(int Velocidade){
-		this->velocidade.y = Velocidade;
-	}
-
 	void setNumeroBalas(int Balas){
 		this->numeroBalas = Balas;
 	}
@@ -150,32 +100,12 @@ public:
 		this->idPlayer = numeroId;
 	}
 
-	sf::RectangleShape getCorpo(){
-		return corpo;
-	}
-
 	int getIdPlayer(){
 		return idPlayer;
 	}
 
-	int& getNumeroVida(){
-		return numeroVida;
-	}
-
 	int& getNumeroBalas(){
 		return numeroBalas;
-	}
-
-	sf::Vector2f getPosicaoV2f(){
-		return posicao;
-	}
-
-	int getVelocidadeX(){
-		return velocidade.x;
-	}
-
-	int getVelocidadeY(){
-		return velocidade.y;
 	}
 
 	void desenharPlayer(sf::RenderWindow& window){
@@ -190,4 +120,4 @@ public:
 		std::cout << "Player desenhado!" << std::endl;
 	}
 };
-#endif // PLAYER_HPP
+#endif

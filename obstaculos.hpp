@@ -2,122 +2,118 @@
 /* funções contrutoras inicializam valores em uma classe <- descobri agr, 28/06, 17:34
  */
 
+#ifndef OBSTACULOS_HPP
+#define OBSTACULOS_HPP
+
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-class Obstaculo {
+#include "Movel.hpp"
+
+class Obstaculo : public Movel{
 protected:
-	float tamanho = 32;
-	int posx;
-	int posy;
-	int velx = -5;
-	int vely = 5;
+
 	sf::Color cor = sf::Color::Red;
-	sf::RectangleShape shape;
+	sf::CircleShape corpoCircular;
+	int raioCorpo;
 
 public:
-	Obstaculo(sf::RenderWindow& window) {
-		posx = window.getSize().x / 2;
-		posy = window.getSize().y / 2;
-		shape.setSize(sf::Vector2f(tamanho, tamanho));
-		shape.setFillColor(cor);
-		shape.setOrigin(tamanho / 2, tamanho / 2);
-		shape.setPosition(posx, posy);
+
+	Obstaculo(int PosicaoX, int PosicaoY) {
+
+		this->posicao.x = PosicaoX;
+		this->posicao.y = PosicaoY;
+		this->raioCorpo = 25;
+		this->corpoCircular.setRadius(raioCorpo);
+		this->corpoCircular.setPosition(posicao.x, posicao.y);
 
 	}
-	void TestaLimite(sf::RenderWindow& window) {
-		vely = posy < window.getSize().y ? vely : -vely;
-		velx = posx < window.getSize().x ? velx : -velx;
-		// inverte se necessário
-		vely = posy > 0 ? vely : -vely;
-		velx = posx > 0 ? velx : -velx;
-	}
-	void Movimenta() {
-		posx = posx + velx * 1;
-		posy = posy + vely * 1;
-		shape.setPosition(posx, posy);
-		sf::sleep(sf::seconds(0.05));
+
+	bool testeColisaoMapa(Bloco (*mapa)[40], int numeroLinhas, int numeroColunas){
+
+		bool colisao;
+
+		 for (int i = 0; i < numeroLinhas; i++) {
+			 for (int j = 0; j < numeroColunas; j++) {
+				 if(mapa[i][j].solido){
+					 if(corpoCircular.getGlobalBounds().intersects(mapa[i][j].corpo.getGlobalBounds())){
+						 colisao = true;
+					 }
+				 }
+			 }
+		 }
+
+		return colisao;
+	};
+	void testaLimiteMovimenta(Bloco (*mapa)[40], int numeroLinhas, int numeroColunas) {
+
+		corpoCircular.move(0,velocidade.y);
+
+		if(testeColisaoMapa( mapa, numeroLinhas, numeroColunas)){
+			corpoCircular.move(0,-velocidade.y);
+			velocidade.y = -velocidade.y;
+		}
+
+		corpoCircular.move(-32,velocidade.y*32);
+
+		if(testeColisaoMapa( mapa, numeroLinhas, numeroColunas)){
+			corpoCircular.move(33,-(velocidade.y*32));
+			velocidade.y = -velocidade.y;
+		}else
+		corpoCircular.move(32,-(velocidade.y*32));
 	}
 	void Desenha(sf::RenderWindow& window) {
+
 		window.clear();
-		window.draw(shape);
-		window.display();
+		window.draw(corpoCircular);
 	}
 };
 
 class BolaFeno: public Obstaculo {
-private:
-	sf::Texture texturaBolaDeFeno;
-	sf::Sprite spriteBolaDeFeno;
-
 public:
-	using Obstaculo::Obstaculo;
 
-	BolaFeno(sf::RenderWindow& window) :
-			Obstaculo(window) {
-		// Carregar a textura da bola de feno
-		texturaBolaDeFeno.loadFromFile("texturaBolaDeFeno.png");
-
-		// Definir a textura para o sprite da bola de feno
-		spriteBolaDeFeno.setTexture(texturaBolaDeFeno);
-		spriteBolaDeFeno.setTextureRect(sf::IntRect (0, 0, 32, 32));
-		spriteBolaDeFeno.setScale(sf::Vector2f (2.0f, 2.0f));
+	BolaFeno(int PosicaoX, int PosicaoY, int VelocidadeY) : Obstaculo( PosicaoX, PosicaoY) {
+		this->velocidade.y = VelocidadeY;
+		std::cout << "Bola criada!" << std::endl;
 	}
 
-	void Movimenta() {
-		posy = posy + vely * 1;
-		spriteBolaDeFeno.setPosition(posx, posy);
-		sf::sleep(sf::seconds(0.05));
-	}
-void TestaLimite(sf::RenderWindow& window) {
-	    int limiteSuperior = 32;
-	    int limiteInferior = window.getSize().y - 96;
-	    int limiteEsquerdo = 32;
-	    int limiteDireito = window.getSize().x - 32;
-
-	    if (posy < limiteSuperior) {
-	        posy = limiteSuperior;
-	        vely = -vely;
-	    } else if (posy > limiteInferior) {
-	        posy = limiteInferior;
-	        vely = -vely;
-	    }
-
-	    if (posx < limiteEsquerdo) {
-	        posx = limiteEsquerdo;
-	        velx = -velx;
-	    } else if (posx > limiteDireito) {
-	        posx = limiteDireito;
-	        velx = -velx;
-	    }
+	void setConfigTexture(){
+		this->corpoCircular.setTextureRect(sf::IntRect (0, 0, 32, 32));
+		this->corpo.setScale(sf::Vector2f (2.0f, 2.0f));
 	}
 
-	void Desenha(sf::RenderWindow& window) {
-		window.clear();
-		window.draw(spriteBolaDeFeno);
-		window.display();
+	sf::CircleShape& getBolaDeFeno(){
+		return corpoCircular;
 	}
 
-	void Desenha(sf::RenderWindow& window) {
-		window.clear();
-		window.draw(spriteBolaDeFeno);
-		window.display();
-	}
-	sf::RectangleShape getBolaDeFeno(){
-		return objetoBolaDeFeno;
+	void changeFrameObstaculo(int Tempo){
+		switch(Tempo){
+		case 1:
+			corpoCircular.setTextureRect(sf::IntRect (0, 0, 32, 32));
+			break;
+		case 2:
+			corpoCircular.setTextureRect(sf::IntRect (32, 0, 32, 32));
+			break;
+		case 3:
+			corpoCircular.setTextureRect(sf::IntRect (0, 32, 32, 32));
+			break;
+		case 4:
+			corpoCircular.setTextureRect(sf::IntRect (32, 32, 32, 32));
+			break;
+		}
 	}
 };
 
-class Trem: public Obstaculo {
-public:
-	using Obstaculo::Obstaculo;
-	void Movimenta() {
-		//	posx = posx + velx * 1;
-		posy = posy + vely * 1;
-		shape.setPosition(posx, posy);
-		sf::sleep(sf::seconds(0.03));
-	}
-};
+//class Trem: public Obstaculo {
+//public:
+//	using Obstaculo::Obstaculo;
+//	void Movimenta() {
+//		//	posx = posx + velx * 1;
+//		posy = posy + vely * 1;
+//		shape.setPosition(posx, posy);
+//		sf::sleep(sf::seconds(0.03));
+//	}
+//};
 
 /*
 no main: 
@@ -127,3 +123,4 @@ dentro do loop do jogo:
 		bolinha.Movimenta();
 		bolinha.Desenha(window);
 */
+#endif
