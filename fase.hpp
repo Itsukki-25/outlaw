@@ -19,6 +19,7 @@
 #include "player.hpp"
 #include "Bala.hpp"
 #include "obstaculos.hpp"
+#include "Janela.hpp"
 
 class Fase{
 private:
@@ -34,7 +35,8 @@ private:
 	int linhas = 20;
 	int colunas = 40;
 	int SQUARE_SIZE = 32;
-
+	Janela janela;
+	int* controlPanel;
 
 	void desenharObjetosMoveis(sf::RenderWindow& window, Mapa mapa, Player& jogador, int tempo){
 		if(balas.size())
