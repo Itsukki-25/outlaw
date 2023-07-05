@@ -21,11 +21,15 @@ public:
 	sf::Sprite FundoParaAsConfig;
 	sf::SoundBuffer SomDePassos;
 	sf::Sound Passos;
+	sf::SoundBuffer SomDeQuebra;
+	sf::Sound Quebra;
 	int sons = 0;
 	int musicas = 0;
 
 	efeitos()
 	{
+		SomDeQuebra.loadFromFile("assets/Quebra.ogg");
+		Quebra.setBuffer(SomDeQuebra);
 		FundoDasConfig.loadFromFile("assets/Config.png");
 		FundoParaAsConfig.setTexture(FundoDasConfig);
 		FundoMododejogo.loadFromFile("assets/Modo.jpg");
