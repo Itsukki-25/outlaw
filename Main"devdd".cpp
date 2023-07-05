@@ -11,6 +11,7 @@
 #include "janela.hpp"
 #include "configuracao.hpp"
 #include "TelaFinal.hpp"
+#include "fase.hpp"
 
 int main() {
 	efeitos musica;
@@ -18,7 +19,9 @@ int main() {
 	int controlPanel = 0;
 
 
-
+	Fase fase;
+	fase.janela =janela;
+	fase.controlPanel = &controlPanel;
 
 	Controle con;
 	con.janela = janela;
@@ -51,7 +54,7 @@ int main() {
 			meun.OMenu();
 			break;
 		case 1:
-		modo.escolha();
+		fase.fase();
 			break;
 		case 2:
 			final.UltimaTela();
