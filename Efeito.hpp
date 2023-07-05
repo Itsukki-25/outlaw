@@ -46,7 +46,6 @@ public:
 		Passos.setBuffer(SomDePassos);
 		tiros.setBuffer(SomDoTiro);
 		tiro.openFromFile("assets/Tiro.ogg");
-
 	}
 
 
