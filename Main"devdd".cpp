@@ -57,10 +57,13 @@ int main() {
 		fase.iniciarjogo();
 			break;
 		case 2:
-			final.UltimaTela();
+			modo.
 
 			break;
 		case 3:
+			final.UltimaTela();
+			break;
+		case 4:
 			con.config(2);
 		}
 
