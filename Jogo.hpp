@@ -24,9 +24,9 @@ bool Ganhador(int ID_ganhador, sf::RenderWindow& window){
 	Sombra SombraProximaFase;
 
 	if (ID_ganhador==1){
-		Ganhador.adicionarTexto("O jogador 1 ganhou!",50,400,150);
+		Ganhador.adicionarTexto("O jogador 1 ganhou!",40,400,150);
 	} else if (ID_ganhador==2){
-		Ganhador.adicionarTexto("O jogador 2 ganhou!",50,400,150);
+		Ganhador.adicionarTexto("O jogador 2 ganhou!",40,400,150);
 	}
 
 	ProximaFase.estrutura.setPosition(700, 510);
