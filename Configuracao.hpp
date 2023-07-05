@@ -9,8 +9,8 @@
 #include <time.h>
 #include "Botao.hpp"
 #include "janela.hpp"
-#include "efeitos.hpp"
-#include "Sombras.hpp"
+#include "Efeito.hpp"
+#include "Sombra.hpp"
 
 using namespace sf;
 using namespace std;
