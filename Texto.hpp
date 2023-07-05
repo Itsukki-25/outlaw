@@ -41,11 +41,11 @@ public:
 
 	void daVida(Player jogador,int qual,float tamanho,float posx,float posy){
 		if (qual==1){
-			char Avida=jogador.getVida();
+			char Avida=jogador.getNumeroVida();
 			adicionarTexto(Avida,tamanho,posx,posy);
 
 		} else {
-			char ABala=jogador.getVida();//getbalas
+			char ABala=jogador.getNumeroVida();//getbalas
 			adicionarTexto(ABala,tamanho,posx,posy);
 		}
 

@@ -14,9 +14,9 @@
 #include "Botao.hpp"
 #include "ModoDeJogo.hpp"
 #include "janela.hpp"
-#include "efeitos.hpp"
-#include "Textos.hpp"
-#include "config.hpp"
+#include "Efeito.hpp"
+#include "Texto.hpp"
+#include "configuracao.hpp"
 #include "Sombras.hpp"
 
 class menu {
@@ -30,7 +30,7 @@ public:
 	Janela *janela;
 	int *controlPanel;
 	efeitos efeito;
-	Textos titulo;
+	Texto titulo;
 
 	bool	sontocando=true;
 	bool	musicaTocando = true;
@@ -39,25 +39,26 @@ public:
 
 	void OMenu() {
 
+
 		// Resto do código do construtor...
 
 		sf::Vector2i mousePos = sf::Mouse::getPosition(janela->window);
 
-		titulo.adicionarTexto("Outlaw", 150, 330, 100);
-		start.estrutura.setPosition(150, 490);
-		SombraStart.Comportamento(300, 80, 160, 500,sf::Color::Black);
+		titulo.adicionarTexto("Outlaw", 120, 330, 100);
+		start.estrutura.setPosition(150, 390);
+		SombraStart.Comportamento(300, 80, 160, 400,sf::Color::Black);
 		start.setTexture(efeito.TexturaBotao);
 
-		start.setTexto(Text("Play", efeito.fonte, 60), efeito.fonte, 210 , 480);
+		start.setTexto(Text("Play", efeito.fonte, 60), efeito.fonte, 210 , 380);
 		//210
 
 		Sair.setTexture(efeito.TexturaBotao);
-		Sair.setTexto(Text("Sair", efeito.fonte, 60), efeito.fonte, 100, 590);
-		Sair.estrutura.setPosition(50, 600);
-		SombraSair.Comportamento(300, 80, 60, 610,sf::Color::Black);
+		Sair.setTexto(Text("Sair", efeito.fonte, 60), efeito.fonte, 100, 490);
+		Sair.estrutura.setPosition(50, 500);
+		SombraSair.Comportamento(300, 80, 60, 510,sf::Color::Black);
 
 		 sf::CircleShape BotaoConfig(40);
-		 sf::Color cor(255, 128, 77, 255);
+		 sf::Color cor(205, 128, 77, 255);
 		 BotaoConfig.setFillColor(cor);
 		 BotaoConfig.setPosition(1250,10);
 		
@@ -80,7 +81,7 @@ public:
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			    if (BotaoConfig.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
 				    efeito.Sons(sontocando);
-			    		*controlPanel=4;
+			    		*controlPanel=3;
 			    }
 			}
 		}
@@ -92,8 +93,8 @@ public:
 
 		janela->window.draw(efeito.fundoImage);
 		titulo.desenharTextos(janela->window);
-		janela->window.draw(SombraSair);
-		janela->window.draw(SombraStart);
+		janela->window.draw(SombraSair.sombra);
+		janela->window.draw(SombraStart.sombra);
 		janela->window.draw(start);
 		janela->window.draw(Sair);
 		janela->window.draw(BotaoConfig);

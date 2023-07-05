@@ -88,7 +88,7 @@ public:
 	                			casas[i][j].corpo.setTextureRect(sf::IntRect (71, 12, 27, 53));
 	                		}
 	                		break;
-	                	case 4:// o case 4 nao vai aparecer propositalmente *achei que n√£o combinou*
+	                	case 4:// o case 4 nao vai aparecer propositalmente *achei que n„o combinou*
 	                		casas[i][j].corpo.setTextureRect(sf::IntRect (7, 117, 24, 14));
 	                		break;
 	                	}

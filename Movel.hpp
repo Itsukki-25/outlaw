@@ -3,6 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Efeito.hpp"
+
 using namespace std;
 using namespace sf;
 
@@ -13,6 +15,7 @@ protected:
 	sf::Vector2f posicao;
 	sf::Vector2i tamanho;
 	sf::Vector2i velocidade;
+	//efeitos efeito;
 	int numeroVida;
 
 	bool testeColisaoMapa(Bloco (*mapa)[40], int numeroLinhas, int numeroColunas){
@@ -56,6 +59,10 @@ public:
 
 	void setPoscaoX(int X){
 		this->posicao.x = X;
+	}
+
+	void setColor(sf::Color cor){
+		this->corpo.setFillColor(cor);
 	}
 
 	void setPosicaoY(int Y){

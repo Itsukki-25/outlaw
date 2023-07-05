@@ -17,9 +17,6 @@ using namespace sf;
 #ifndef DECLARACOES_HPP_
 #define DECLARACOES_HPP_
 
-
-
-
 class Botao : public Drawable {
 public:
 
@@ -41,7 +38,6 @@ public:
         estrutura.setPosition(posx,posY);
     }
 
-
     void setTexture(const sf::Texture& textura)
        {
            estrutura.setTexture(&textura);
@@ -59,9 +55,6 @@ public:
 
         target.draw(texto, states);
     }
-
-
-
 
     bool contemPonto(const sf::Vector2i& ponto) {
 

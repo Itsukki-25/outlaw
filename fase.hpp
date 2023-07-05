@@ -19,7 +19,7 @@
 #include "player.hpp"
 #include "Bala.hpp"
 #include "obstaculos.hpp"
-#include "Janela.hpp"
+#include "Efeito.hpp"
 
 class Fase{
 private:
@@ -29,14 +29,14 @@ private:
 	vector<BolaFeno> bolasDeFeno;
 	Player player2;
 	Player player1;
+	efeitos efeito;
 	sf::Vector2u player1TeclaPressionada;
 	sf::Vector2u player2TeclaPressionada;
 	int jogoAcabou = false;
 	int linhas = 20;
 	int colunas = 40;
 	int SQUARE_SIZE = 32;
-	Janela janela;
-	int* controlPanel;
+
 
 	void desenharObjetosMoveis(sf::RenderWindow& window, Mapa mapa, Player& jogador, int tempo){
 		if(balas.size())
@@ -61,7 +61,8 @@ private:
 		for(int i = 0; i <= bolasDeFeno.size()-1 ; i++){
 		    if(tempo % 2 || tempo % 3){
 		    	bolasDeFeno[i].getBolaDeFeno().setRotation(bolasDeFeno[i].getBolaDeFeno().getRotation()-1);
-		    }
+		    }else
+		    	bolasDeFeno[i].getBolaDeFeno().setRotation(bolasDeFeno[i].getBolaDeFeno().getRotation()+1);
 			window.draw(bolasDeFeno[i].getBolaDeFeno());
 			bolasDeFeno[i].testaLimiteMovimenta(mapa.getCasa(), 20, 40);
 			//bolasDeFeno[i].changeFrameObstaculo(tempo);
@@ -73,17 +74,23 @@ private:
 
 	    if(player1TeclaPressionada.x == true && player1TeclaPressionada.y == true && player1.getNumeroBalas() > 0){
 	    	std::cout << "Jogador 1 atirou" <<std::endl;
-	    	balas.push_back(Bala(-5, player1.getVelocidadeY(), player1));
+	    	Bala bala(-5, player1.getVelocidadeY(), player1);
+	    	bala.setColor(sf::Color::Blue);
+	    	balas.push_back(bala);
 	    	player1TeclaPressionada.x = false;
 	    	player1TeclaPressionada.y = false;
 	    	player1.getNumeroBalas()--;
+	    	efeito.tiros.play();
 	    }
 	    if(player2TeclaPressionada.x == true && player2TeclaPressionada.y == true && player2.getNumeroBalas() > 0){
 	    	std::cout << "Jogador 1 atirou" <<std::endl;
-	    	balas.push_back(Bala(5, player2.getVelocidadeY(), player2));
+	    	Bala bala(5, player2.getVelocidadeY(), player2);
+	    	bala.setColor(sf::Color::Red);
+	    	balas.push_back(bala);
 	    	player2TeclaPressionada.x = false;
 	    	player2TeclaPressionada.y = false;
 	    	player2.getNumeroBalas()--;
+	    	efeito.tiros.play();
 	    }
 	    if(player2.getNumeroBalas() == 0 && player1.getNumeroBalas() == 0){
 	    	player2.getNumeroBalas() = 5;
@@ -129,6 +136,7 @@ public:
 		player1.setTexture(&player1Texture);
 		player2.setIdPlayer(2);
 		player2.setTexture(&player2Texture);
+		std::cout << "criei!" << std::endl;
 
 		fundoImage.setTexture(textureFundo);
 
@@ -226,7 +234,7 @@ public:
 			}
 
 		std::cout << "Jogo acaboou!!" << std::endl;
-		sleep(2);
+		sleep(1);
 		return jogoAcabou;
 	}
 };

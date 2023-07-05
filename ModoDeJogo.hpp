@@ -16,9 +16,10 @@
 #include <iostream>
 #include "Botao.hpp"
 #include "janela.hpp"
-#include "efeitos.hpp"
-#include "Textos.hpp"
+#include "Efeito.hpp"
+#include "Texto.hpp"
 #include "Sombras.hpp"
+
 class Modo {
 public:
 	Botao Solo;
@@ -27,7 +28,7 @@ public:
 	Sombra SombraDois;
 	Janela *janela;
 	efeitos efeito;
-	Textos Mododejogo;
+	Texto Mododejogo;
 	bool	sontocando=true;
 		bool	musicaTocando =true;
 	int *controlPanel;
@@ -60,8 +61,8 @@ public:
 		}
 		janela->window.draw(efeito.FundoModo);
 		Mododejogo.desenharTextos(janela->window);
-		janela->window.draw(SombraUm);
-		janela->window.draw(SombraDois);
+		janela->window.draw(SombraUm.sombra);
+		janela->window.draw(SombraDois.sombra);
 		janela->window.draw(Solo);
 		janela->window.draw(dois);
 	}

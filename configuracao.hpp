@@ -10,7 +10,7 @@
 #include "Botao.hpp"
 #include "janela.hpp"
 #include "Efeito.hpp"
-#include "Sombra.hpp"
+#include "Sombras.hpp"
 
 using namespace sf;
 using namespace std;
@@ -28,8 +28,8 @@ public:
 
 		Botao Voltar,Salvar,Musica,Sons;
 
-		Textos Config;
-		Sombra SombraVoltar,SombraSalvar,SombraMusica,SombraSons,base;
+		Texto Config;
+		Sombra SombraVoltar,SombraSalvar,SombraMusica,SombraSons;
 
 
 		sf::Vector2i mousePos = sf::Mouse::getPosition(janela->window);
@@ -99,12 +99,11 @@ public:
 		// Atualizar a animação do botão "start" com base na posição do mouse
 
 		janela->window.draw(efeito.FundoParaAsConfig);
-		janela->window.draw(base);
 		Config.desenharTextos(janela->window);
-		janela->window.draw(SombraVoltar);
-		janela->window.draw(SombraSalvar);
-		janela->window.draw(SombraSons);
-		janela->window.draw(SombraMusica);
+		janela->window.draw(SombraVoltar.sombra);
+		janela->window.draw(SombraSalvar.sombra);
+		janela->window.draw(SombraSons.sombra);
+		janela->window.draw(SombraMusica.sombra);
 		janela->window.draw(Salvar);
 		janela->window.draw(Sons);
 		janela->window.draw(Musica);

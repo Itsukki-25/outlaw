@@ -1,12 +1,15 @@
 #ifndef EFEITO_HPP_
 #define EFEITO_HPP_
 
+#include <SFML/Audio.hpp>
+
 class efeitos {
 public:
 	sf::Font fonte;
 	sf::SoundBuffer SomDoTiro;
 	sf::Sound tiros;
 	sf::Music musica;
+	sf::Music tiro;
 	sf::SoundBuffer SomDoClique;
 	sf::Sound clique;
 	sf::Texture textureFundo;
@@ -16,6 +19,8 @@ public:
 	sf::Sprite FundoModo;
 	sf::Texture FundoDasConfig;
 	sf::Sprite FundoParaAsConfig;
+	sf::SoundBuffer SomDePassos;
+	sf::Sound Passos;
 	int sons = 0;
 	int musicas = 0;
 
@@ -32,7 +37,14 @@ public:
 		SomDoClique.loadFromFile("assets/clique.ogg");
 		clique.setBuffer(SomDoClique);
 		musica.openFromFile("assets/musica.ogg");
+		SomDoTiro.loadFromFile("assets/Tiro.ogg");
+		SomDePassos.loadFromFile("assets/Passos.ogg");
+		Passos.setBuffer(SomDePassos);
+		tiros.setBuffer(SomDoTiro);
+		tiro.openFromFile("assets/Tiro.ogg");
+
 	}
+
 
 	bool DesligarSom(bool tocar, int volume)
 	{
