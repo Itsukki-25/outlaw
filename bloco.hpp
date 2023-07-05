@@ -18,9 +18,9 @@ public:
 
 	sf::RectangleShape corpo;
 	bool solido;
+	bool visivel;
+	bool interageBala;
 
 };
-
-
 
 #endif /* BLOCO_HPP_ */
